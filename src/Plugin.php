@@ -87,7 +87,7 @@ class Plugin extends BasePlugin
         $navItem = [
             'url' => 'announce',
             'label' => 'Announce',
-            'icon' => CRAFT_BASE_PATH . '/plugins/announce/src/icon.svg',
+            'icon' => CRAFT_BASE_PATH . '/plugins/announce/src/icon-mask.svg',
         ];
 
         if (!Craft::$app->getUser()->checkPermission('announce')) {
@@ -123,16 +123,12 @@ class Plugin extends BasePlugin
                     return;
                 }
 
-                $alertHTML = '<svg width="28" height="28" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.8907 51.1687C15.0018 50.0535 15.0018 48.2528 13.8907 47.1377L13.2897 46.5367L20.045 43.5363C20.1149 43.6124 20.1805 43.6928 20.2503 43.769L23.2957 46.7631C25.4394 48.858 28.4616 49.7869 31.4114 49.2642C34.3615 48.7395 36.8779 46.8245 38.1711 44.1202C39.462 41.416 39.3689 38.257 37.9235 35.633L45.4384 32.313L47.1336 33.991C48.2468 35.104 50.0519 35.104 51.1651 33.991C52.2783 32.878 52.2783 31.0731 51.1651 29.96L22.0448 0.833181C20.9274 -0.279837 19.1201 -0.277725 18.007 0.839529C16.8938 1.95466 16.898 3.7617 18.0133 4.87471L19.427 6.28821L5.16323 38.4112L4.87541 38.1128C3.76223 36.9977 1.95494 36.9956 0.839643 38.1086C-0.277762 39.2216 -0.279875 41.0265 0.833294 42.1438L9.85922 51.1684C10.9745 52.2772 12.7754 52.2775 13.8907 51.1687ZM32.5986 42.9355C31.0812 44.4484 28.6264 44.4484 27.1089 42.9355L25.365 41.1686L32.9498 37.8211C34.1371 39.3721 33.9868 41.5643 32.5985 42.9397L32.5986 42.9355ZM23.7613 10.6115L27.9113 14.761L12.3034 36.4011L23.7613 10.6115Z" fill="#d81f23"/></svg>   ';
+                $alertHTML = '<svg width="18" viewBox="0 0 49 46" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_6383_2288)"><path d="M49 32.7794L27.9041 0L23.4437 2.8415L24.8036 4.95561L5.54232 31.0268L4.46465 29.3508L0.00427246 32.1923L7.87729 44.4261L12.3377 41.5846L11.2899 39.9554L17.9826 38.6027C18.0297 38.6836 18.0724 38.7644 18.1195 38.8452L20.2791 42.1419C21.8015 44.4516 24.3503 45.8852 27.1258 45.9957C29.8969 46.1063 32.5569 44.8813 34.2632 42.6991C35.9653 40.5212 36.5084 37.6627 35.7258 35.0168L39.6601 34.2214L43.184 33.5068L44.5482 35.6251L49.0085 32.7836L49 32.7794ZM12.389 30.6397L27.8741 9.69003L30.8035 14.2458L12.389 30.6397ZM29.4522 40.5339C27.7801 41.5931 25.5563 41.1082 24.4872 39.445L23.2726 37.5308L30.7907 36.008C31.5476 37.6371 30.9746 39.5726 29.4522 40.5339Z" fill="#d81f23"/></g><defs><clipPath id="clip0_6383_2288"><rect width="24" fill="white"/></clipPath></defs></svg> ';
 
-                $alertHTML .= '<strong>' . $settings->announcement . '</strong>';
+                $alertHTML .= $settings->bannerText;
 
-                if ($settings->bodyText) {
-                    $alertHTML .= ' ' . $settings->bodyText;
-                }
-
-                if ($settings->link && $settings->linkText) {
-                    $alertHTML .= ' <a href="' . $settings->link . '" target="_blank" class="go">' . $settings->linkText . '</a>';
+                if ($settings->bannerLink && $settings->bannerLinkText) {
+                    $alertHTML .= ' <a href="' . $settings->bannerLink . '" target="_blank" class="go">' . $settings->bannerLinkText . '</a>';
                 }
 
                 $event->alerts = array_merge($event->alerts, [
@@ -171,7 +167,7 @@ class Plugin extends BasePlugin
                     $Settings = settings::getSettings();
 
                     // only redirect for users enabled to see the announcement
-                    if (($Settings->enabled && !$userIsAdmin) || ($Settings->adminEnabled && $userIsAdmin)) {
+                    if (($Settings->enabled && !$userIsAdmin) || (!$Settings->adminDisabled && $userIsAdmin)) {
                         $userSession->setReturnUrl(UrlHelper::cpUrl('welcome-announcement'));
                     } else {
                         $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
