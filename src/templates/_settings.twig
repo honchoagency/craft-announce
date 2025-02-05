@@ -1,0 +1,113 @@
+{% macro warningString(key) %}
+    This is being overridden by the <span style="font-weight: 500;">{{ key }}</span> setting in the <span style="font-weight: 500;">config/announce.php</span> file.
+{% endmacro %}
+
+{% extends '_layouts/cp.twig' %}
+{% import '_includes/forms.twig' as forms %}
+
+{% set title = 'Announce' %}
+{% set fullPageForm = true %}
+
+{% set tabs = {
+    'alert': { label: 'Alert', url: '#announce-alert' },
+    'login': { label: 'Login', url: '#announce-login' },
+    'content': { label: 'Content', url: '#announce-content' },
+    'links': { label: 'Links', url: '#announce-links' }
+} %}
+
+{% set crumbs = [
+    { url: 'announce', label: 'Announce' }
+] %}
+
+{% block content %}
+    {{ actionInput('announce/settings/save-settings') }}
+
+    <div>
+        <div id="announce-alert">
+            <h3>Enable Alert Banner</h3>
+
+            {{ forms.lightswitchField({
+                label: 'All Users',
+                name: 'alertEnabled',
+                on: settings.alertEnabled ?? "",
+                value: settings.alertEnabled,
+                warning: settings.alertEnabledConfig ? _self.warningString('alertEnabled')
+            }) }}
+        </div>
+
+        <div id="announce-login" class="hidden">
+            <h3>Enable Login Announcement</h3>
+
+            {{ forms.lightswitchField({
+                label: 'Admins',
+                name: 'adminEnabled',
+                on: settings.adminEnabled ?? "",
+                value: settings.adminEnabled,
+                warning: settings.adminEnabledConfig ? _self.warningString('adminEnabled')
+            }) }}
+
+            {{ forms.lightswitchField({
+                label: 'Non Admins',
+                name: 'enabled',
+                on: settings.enabled ?? "",
+                value: settings.enabled,
+                warning: settings.enabledConfig ? _self.warningString('enabled')
+            }) }}
+
+            <p><a href="/admin/welcome-announcement" class="go announce-dark-link" target="_blank">Login Announcement</a></p>
+        </div>
+
+        <div id="announce-content" class="hidden">
+            {{ forms.textField({
+                label: 'Announcement',
+                name: 'announcement',
+                value: settings.announcement,
+                instructions: 'Title of the announcement.',
+                required: true,
+                warning: settings.announcementConfig ? _self.warningString('announcement')
+            }) }}
+
+            {{ forms.textField({
+                label: 'Body Text',
+                name: 'bodyText',
+                value: settings.bodyText,
+                instructions: 'Body text of the announcement.',
+                warning: settings.bodyTextConfig ? _self.warningString('bodyText')
+            }) }}
+
+            {{ forms.textField({
+                label: 'Link Button Text',
+                name: 'linkText',
+                value: settings.linkText,
+                instructions: 'Button does not show if blank.',
+                warning: settings.linkTextConfig ? _self.warningString('linkText')
+            }) }}
+
+            {{ forms.textField({
+                label: 'Continue Button Text',
+                name: 'continueButtonText',
+                value: settings.continueButtonText,
+                instructions: 'Defaults to "Continue" if empty.',
+                warning: settings.continueButtonTextConfig ? _self.warningString('continueButtonText')
+            }) }}
+        </div>
+
+        <div id="announce-links" class="hidden">
+            {{ forms.textField({
+                label: 'Link Button URL',
+                name: 'link',
+                value: settings.link,
+                instructions: 'Link URL. Opens in new window. \n Button does not show if blank.',
+                warning: settings.linkConfig ? _self.warningString('link')
+            }) }}
+
+            {{ forms.textField({
+                label: 'Continue Button Redirect URL',
+                name: 'continueButtonURL',
+                value: settings.continueButtonURL,
+                instructions: 'Redirect URL when login announcement button is clicked. \n Leave blank to redirect to the dashboard.',
+                warning: settings.continueButtonURLConfig ? _self.warningString('continueButtonURL')
+            }) }}
+        </div>
+    </div>
+{% endblock %}

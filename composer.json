@@ -1,0 +1,47 @@
+{
+  "name": "honcho/craft-announce",
+  "description": "Display an announcement to admin users",
+  "type": "craft-plugin",
+  "license": "proprietary",
+  "support": {
+    "email": "hello@honcho.agency",
+    "issues": "https://github.com/honchoagency/craft-announce/issues?state=open",
+    "source": "https://github.com/honchoagency/craft-announce",
+    "docs": "https://github.com/honchoagency/craft-announce",
+    "rss": "https://github.com/honchoagency/craft-announce/releases.atom"
+  },
+  "require": {
+    "php": ">=8.2",
+    "craftcms/cms": "^5.5.0"
+  },
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main"
+  },
+  "autoload": {
+    "psr-4": {
+      "honcho\\craftannounce\\": "src/"
+    }
+  },
+  "extra": {
+    "handle": "announce",
+    "name": "Announce",
+    "developer": "Honcho",
+    "documentationUrl": "https://github.com/honchoagency/craft-announce"
+  },
+  "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G"
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "8.2"
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  }
+}

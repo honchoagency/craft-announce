@@ -1,0 +1,4 @@
+# Release Notes for Announce
+
+## 1.0.0
+- Initial release
