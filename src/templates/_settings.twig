@@ -10,7 +10,7 @@
 
 {% set tabs = {
     'banner': { label: 'Banner', url: '#announce-alert' },
-    'modal': { label: 'Modal', url: '#announce-login' },
+    'modal': { label: 'Modal', url: '#announce-modal' },
 } %}
 
 {% set crumbs = [
@@ -22,20 +22,37 @@
 
     <div>
         <div id="announce-alert">
+            <h2>Banner</h2>
+
+            <p>The alert banner will display your announcement at the top of the page for all users.</p>
+
             {{ forms.lightswitchField({
                 label: 'Enabled',
-                name: 'alertEnabled',
-                on: settings.alertEnabled ?? "",
-                value: settings.alertEnabled,
-                warning: settings.alertEnabledConfig ? _self.warningString('alertEnabled')
+                name: 'bannerEnabled',
+                on: settings.bannerEnabled ?? "",
+                value: settings.bannerEnabled,
+                warning: settings.bannerEnabledConfig ? _self.warningString('bannerEnabled')
             }) }}
+
+            <hr style="margin-inline: calc(var(--xl)* -1);">
+
+            <h2>Banner Content</h2>
+
+            <p>The main announcement message for the alert banner.</p>
 
             {{ forms.textField({
                 label: 'Banner Text',
                 name: 'bannerText',
                 value: settings.bannerText,
+                required: true,
                 warning: settings.bannerTextConfig ? _self.warningString('bannerText')
             }) }}
+
+            <hr style="margin-inline: calc(var(--xl)* -1);">
+
+            <h2>Banner Link</h2>
+
+            <p>This link allows you to provide and external source for more information.</p>
 
             {{ forms.textField({
                 label: 'Banner Link Text',
@@ -49,75 +66,95 @@
                 label: 'Banner Link URL',
                 name: 'bannerLink',
                 value: settings.bannerLink,
-                instructions: 'Opens in new window. \n Button does not show if blank.',
+                instructions: 'Opens in new tab. \n Button does not show if blank.',
                 warning: settings.bannerLinkConfig ? _self.warningString('bannerLink')
             }) }}
         </div>
 
-        <div id="announce-login" class="hidden">
+        <div id="announce-modal" class="hidden">
+            <h2>Login Modal</h2>
+
+            <p>The login modal will display your announcement when users log in. <a href="/admin/login-announcement" class="go announce-dark-link" target="_blank">View Login Modal</a></p>
+
             {{ forms.lightswitchField({
                 label: 'Enabled',
-                name: 'enabled',
-                on: settings.enabled ?? "",
-                value: settings.enabled,
-                warning: settings.enabledConfig ? _self.warningString('enabled')
+                name: 'loginModalEnabled',
+                on: settings.loginModalEnabled ?? "",
+                value: settings.loginModalEnabled,
+                warning: settings.loginModalEnabledConfig ? _self.warningString('loginModalEnabled')
             }) }}
 
             {{ forms.lightswitchField({
                 label: 'Disable for Admins',
-                name: 'adminDisabled',
-                on: settings.adminDisabled ?? "",
-                value: settings.adminDisabled,
-                warning: settings.adminDisabledConfig ? _self.warningString('adminDisabled')
+                name: 'loginModalAdminDisabled',
+                on: settings.loginModalAdminDisabled ?? "",
+                value: settings.loginModalAdminDisabled,
+                warning: settings.loginModalAdminDisabledConfig ? _self.warningString('loginModalAdminDisabled')
             }) }}
 
-            <p><a href="/admin/welcome-announcement" class="go announce-dark-link" target="_blank">View Login Modal</a></p>
+            <hr style="margin-inline: calc(var(--xl)* -1);">
+
+            <h2>Modal Content</h2>
 
             {{ forms.textField({
                 label: 'Title',
-                name: 'announcement',
-                value: settings.announcement,
+                name: 'loginModalTitle',
+                value: settings.loginModalTitle,
                 required: true,
-                warning: settings.announcementConfig ? _self.warningString('announcement')
+                instructions: 'The title of the modal loginModalTitle.',
+                warning: settings.loginModalTitleConfig ? _self.warningString('loginModalTitle')
             }) }}
 
             {{ forms.textField({
                 label: 'Body Text',
-                name: 'bodyText',
-                value: settings.bodyText,
-                warning: settings.bodyTextConfig ? _self.warningString('bodyText')
+                name: 'loginModalBodyText',
+                value: settings.loginModalBodyText,
+                instructions: 'The body text of the modal announcement.',
+                warning: settings.loginModalBodyTextConfig ? _self.warningString('loginModalBodyText')
             }) }}
 
+            <hr style="margin-inline: calc(var(--xl)* -1);">
+
+            <h2>Link Button</h2>
+
+            <p>This link allows you to provide and external source for more information.</p>
+
             {{ forms.textField({
-                label: 'Link Button Text',
-                name: 'linkText',
-                value: settings.linkText,
+                label: 'Button Text',
+                name: 'loginModalLinkText',
+                value: settings.loginModalLinkText,
                 instructions: 'Button does not show if blank.',
-                warning: settings.linkTextConfig ? _self.warningString('linkText')
+                warning: settings.loginModalLinkTextConfig ? _self.warningString('loginModalLinkText')
             }) }}
 
             {{ forms.textField({
-                label: 'Continue Button Text',
-                name: 'continueButtonText',
-                value: settings.continueButtonText,
+                label: 'Button URL',
+                name: 'loginModalLink',
+                value: settings.loginModalLink,
+                instructions: 'Opens in new tab. \n Button does not show if blank.',
+                warning: settings.loginModalLinkConfig ? _self.warningString('loginModalLink')
+            }) }}
+
+            <hr style="margin-inline: calc(var(--xl)* -1);">
+
+            <h2>Continue Button</h2>
+
+            <p>The user will click this to dismiss the modal announcement and continue to the admin.</p>
+
+            {{ forms.textField({
+                label: 'Button Text',
+                name: 'loginModalContinueButtonText',
+                value: settings.loginModalContinueButtonText,
                 instructions: 'Defaults to "Continue" if empty.',
-                warning: settings.continueButtonTextConfig ? _self.warningString('continueButtonText')
+                warning: settings.loginModalContinueButtonTextConfig ? _self.warningString('loginModalContinueButtonText')
             }) }}
 
             {{ forms.textField({
-                label: 'Link Button URL',
-                name: 'link',
-                value: settings.link,
-                instructions: 'Opens in new window. \n Button does not show if blank.',
-                warning: settings.linkConfig ? _self.warningString('link')
-            }) }}
-
-            {{ forms.textField({
-                label: 'Continue Button Redirect URL',
-                name: 'continueButtonURL',
-                value: settings.continueButtonURL,
+                label: 'Button Redirect URL',
+                name: 'loginModalContinueButtonURL',
+                value: settings.loginModalContinueButtonURL,
                 instructions: 'Redirect URL when login modal button is clicked. \n Leave blank to redirect to the dashboard.',
-                warning: settings.continueButtonURLConfig ? _self.warningString('continueButtonURL')
+                warning: settings.loginModalContinueButtonURLConfig ? _self.warningString('loginModalContinueButtonURL')
             }) }}
         </div>
     </div>

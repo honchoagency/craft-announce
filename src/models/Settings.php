@@ -14,24 +14,24 @@ use honcho\craftannounce\records\Settings as SettingsRecord;
 class Settings extends Model
 {
     // Public Properties
-    public ?string $announcement = 'Your announcement here';
-    public ?bool $announcementConfig = false;
-    public ?bool $enabled = true;
-    public ?bool $enabledConfig = false;
-    public ?bool $adminDisabled = false;
-    public ?bool $adminDisabledConfig = false;
-    public ?string $bodyText = 'Your text here';
-    public ?bool $bodyTextConfig = false;
-    public ?string $linkText = 'Your link text here';
-    public ?bool $linkTextConfig = false;
-    public ?string $link = '';
-    public ?bool $linkConfig = false;
-    public ?string $continueButtonText = 'Continue';
-    public ?string $continueButtonURL = '';
-    public ?bool $continueButtonTextConfig = false;
-    public ?bool $continueButtonURLConfig = false;
-    public ?bool $alertEnabled = true;
-    public ?bool $alertEnabledConfig = false;
+    public ?string $loginModalTitle = 'Your announcement here';
+    public ?bool $loginModalTitleConfig = false;
+    public ?bool $loginModalEnabled = true;
+    public ?bool $loginModalEnabledConfig = false;
+    public ?bool $loginModalAdminDisabled = false;
+    public ?bool $loginModalAdminDisabledConfig = false;
+    public ?string $loginModalBodyText = 'Your text here';
+    public ?bool $loginModalBodyTextConfig = false;
+    public ?string $loginModalLinkText = 'Your link text here';
+    public ?bool $loginModalLinkTextConfig = false;
+    public ?string $loginModalLink = '';
+    public ?bool $loginModalLinkConfig = false;
+    public ?string $loginModalContinueButtonText = 'Continue';
+    public ?string $loginModalContinueButtonURL = '';
+    public ?bool $loginModalContinueButtonTextConfig = false;
+    public ?bool $loginModalContinueButtonURLConfig = false;
+    public ?bool $bannerEnabled = true;
+    public ?bool $bannerEnabledConfig = false;
     public ?string $bannerText = 'Your banner text here';
     public ?bool $bannerTextConfig = false;
     public ?string $bannerLinkText = 'Your banner link text here';
@@ -45,8 +45,8 @@ class Settings extends Model
     protected function defineRules(): array
     {
         return array_merge(parent::defineRules(), [
-            [['announcement'], 'required'],
-            [['link','bannerLink','continueButtonURL'], UrlValidator::class],
+            [['loginModalTitle', 'bannerText'], 'required'],
+            [['loginModalLink','bannerLink','loginModalContinueButtonURL'], UrlValidator::class],
         ]);
     }
 
@@ -61,15 +61,15 @@ class Settings extends Model
         $SettingsRecord = SettingsRecord::findOne(['handle' => 'settings']);
 
         if ($SettingsRecord) {
-            $Settings->announcement = $SettingsRecord->announcement;
-            $Settings->enabled = $SettingsRecord->enabled;
-            $Settings->adminDisabled = $SettingsRecord->adminDisabled;
-            $Settings->bodyText = $SettingsRecord->bodyText;
-            $Settings->linkText = $SettingsRecord->linkText;
-            $Settings->link = $SettingsRecord->link;
-            $Settings->continueButtonText = $SettingsRecord->continueButtonText;
-            $Settings->continueButtonURL = $SettingsRecord->continueButtonURL;
-            $Settings->alertEnabled = $SettingsRecord->alertEnabled;
+            $Settings->loginModalTitle = $SettingsRecord->loginModalTitle;
+            $Settings->loginModalEnabled = $SettingsRecord->loginModalEnabled;
+            $Settings->loginModalAdminDisabled = $SettingsRecord->loginModalAdminDisabled;
+            $Settings->loginModalBodyText = $SettingsRecord->loginModalBodyText;
+            $Settings->loginModalLinkText = $SettingsRecord->loginModalLinkText;
+            $Settings->loginModalLink = $SettingsRecord->loginModalLink;
+            $Settings->loginModalContinueButtonText = $SettingsRecord->loginModalContinueButtonText;
+            $Settings->loginModalContinueButtonURL = $SettingsRecord->loginModalContinueButtonURL;
+            $Settings->bannerEnabled = $SettingsRecord->bannerEnabled;
             $Settings->bannerText = $SettingsRecord->bannerText;
             $Settings->bannerLinkText = $SettingsRecord->bannerLinkText;
             $Settings->bannerLink = $SettingsRecord->bannerLink;
@@ -88,15 +88,15 @@ class Settings extends Model
         $Settings = new Settings();
         $requestParams = Craft::$app->getRequest()->getBodyParams();
 
-        $Settings->announcement = $requestParams['announcement'];
-        $Settings->enabled = $requestParams['enabled'];
-        $Settings->adminDisabled = $requestParams['adminDisabled'];
-        $Settings->bodyText = $requestParams['bodyText'];
-        $Settings->linkText = $requestParams['linkText'];
-        $Settings->link = $requestParams['link'];
-        $Settings->continueButtonText = $requestParams['continueButtonText'];
-        $Settings->continueButtonURL = $requestParams['continueButtonURL'];
-        $Settings->alertEnabled = $requestParams['alertEnabled'];
+        $Settings->loginModalTitle = $requestParams['loginModalTitle'];
+        $Settings->loginModalEnabled = $requestParams['loginModalEnabled'];
+        $Settings->loginModalAdminDisabled = $requestParams['loginModalAdminDisabled'];
+        $Settings->loginModalBodyText = $requestParams['loginModalBodyText'];
+        $Settings->loginModalLinkText = $requestParams['loginModalLinkText'];
+        $Settings->loginModalLink = $requestParams['loginModalLink'];
+        $Settings->loginModalContinueButtonText = $requestParams['loginModalContinueButtonText'];
+        $Settings->loginModalContinueButtonURL = $requestParams['loginModalContinueButtonURL'];
+        $Settings->bannerEnabled = $requestParams['bannerEnabled'];
         $Settings->bannerText = $requestParams['bannerText'];
         $Settings->bannerLinkText = $requestParams['bannerLinkText'];
         $Settings->bannerLink = $requestParams['bannerLink'];
@@ -111,15 +111,15 @@ class Settings extends Model
                 $SettingsRecord->handle = 'settings';
             }
 
-            $SettingsRecord->announcement = $Settings->announcement;
-            $SettingsRecord->enabled = $Settings->enabled;
-            $SettingsRecord->adminDisabled = $Settings->adminDisabled;
-            $SettingsRecord->bodyText = $Settings->bodyText;
-            $SettingsRecord->linkText = $Settings->linkText;
-            $SettingsRecord->link = $Settings->link;
-            $SettingsRecord->continueButtonText = $Settings->continueButtonText;
-            $SettingsRecord->continueButtonURL = $Settings->continueButtonURL;
-            $SettingsRecord->alertEnabled = $Settings->alertEnabled;
+            $SettingsRecord->loginModalTitle = $Settings->loginModalTitle;
+            $SettingsRecord->loginModalEnabled = $Settings->loginModalEnabled;
+            $SettingsRecord->loginModalAdminDisabled = $Settings->loginModalAdminDisabled;
+            $SettingsRecord->loginModalBodyText = $Settings->loginModalBodyText;
+            $SettingsRecord->loginModalLinkText = $Settings->loginModalLinkText;
+            $SettingsRecord->loginModalLink = $Settings->loginModalLink;
+            $SettingsRecord->loginModalContinueButtonText = $Settings->loginModalContinueButtonText;
+            $SettingsRecord->loginModalContinueButtonURL = $Settings->loginModalContinueButtonURL;
+            $SettingsRecord->bannerEnabled = $Settings->bannerEnabled;
             $SettingsRecord->bannerText = $Settings->bannerText;
             $SettingsRecord->bannerLinkText = $Settings->bannerLinkText;
             $SettingsRecord->bannerLink = $Settings->bannerLink;
@@ -150,49 +150,49 @@ class Settings extends Model
         $pluginConfig = Plugin::getInstance()->pluginConfig;
 
         if ($pluginConfig != []) {
-            if (array_key_exists('announcement', $pluginConfig)) {
-                $Settings->announcementConfig = true;
-                $Settings->announcement = $pluginConfig['announcement'];
+            if (array_key_exists('loginModalTitle', $pluginConfig)) {
+                $Settings->loginModalTitleConfig = true;
+                $Settings->loginModalTitle = $pluginConfig['loginModalTitle'];
             }
 
-            if (array_key_exists('enabled', $pluginConfig)) {
-                $Settings->enabledConfig = true;
-                $Settings->enabled = $pluginConfig['enabled'];
+            if (array_key_exists('loginModalEnabled', $pluginConfig)) {
+                $Settings->loginModalEnabledConfig = true;
+                $Settings->loginModalEnabled = $pluginConfig['loginModalEnabled'];
             }
 
-            if (array_key_exists('adminDisabled', $pluginConfig)) {
-                $Settings->adminDisabledConfig = true;
-                $Settings->adminDisabled = $pluginConfig['adminDisabled'];
+            if (array_key_exists('loginModalAdminDisabled', $pluginConfig)) {
+                $Settings->loginModalAdminDisabledConfig = true;
+                $Settings->loginModalAdminDisabled = $pluginConfig['loginModalAdminDisabled'];
             }
 
-            if (array_key_exists('bodyText', $pluginConfig)) {
-                $Settings->bodyTextConfig = true;
-                $Settings->bodyText = $pluginConfig['bodyText'];
+            if (array_key_exists('loginModalBodyText', $pluginConfig)) {
+                $Settings->loginModalBodyTextConfig = true;
+                $Settings->loginModalBodyText = $pluginConfig['loginModalBodyText'];
             }
 
-            if (array_key_exists('linkText', $pluginConfig)) {
-                $Settings->linkTextConfig = true;
-                $Settings->linkText = $pluginConfig['linkText'];
+            if (array_key_exists('loginModalLinkText', $pluginConfig)) {
+                $Settings->loginModalLinkTextConfig = true;
+                $Settings->loginModalLinkText = $pluginConfig['loginModalLinkText'];
             }
 
-            if (array_key_exists('link', $pluginConfig)) {
-                $Settings->linkConfig = true;
-                $Settings->link = $pluginConfig['link'];
+            if (array_key_exists('loginModalLink', $pluginConfig)) {
+                $Settings->loginModalLinkConfig = true;
+                $Settings->loginModalLink = $pluginConfig['loginModalLink'];
             }
 
-            if (array_key_exists('continueButtonText', $pluginConfig)) {
-                $Settings->continueButtonTextConfig = true;
-                $Settings->continueButtonText = $pluginConfig['continueButtonText'];
+            if (array_key_exists('loginModalContinueButtonText', $pluginConfig)) {
+                $Settings->loginModalContinueButtonTextConfig = true;
+                $Settings->loginModalContinueButtonText = $pluginConfig['loginModalContinueButtonText'];
             }
 
-            if (array_key_exists('continueButtonURL', $pluginConfig)) {
-                $Settings->continueButtonURLConfig = true;
-                $Settings->continueButtonURL = $pluginConfig['continueButtonURL'];
+            if (array_key_exists('loginModalContinueButtonURL', $pluginConfig)) {
+                $Settings->loginModalContinueButtonURLConfig = true;
+                $Settings->loginModalContinueButtonURL = $pluginConfig['loginModalContinueButtonURL'];
             }
 
-            if (array_key_exists('alertEnabled', $pluginConfig)) {
-                $Settings->alertEnabledConfig = true;
-                $Settings->alertEnabled = $pluginConfig['alertEnabled'];
+            if (array_key_exists('bannerEnabled', $pluginConfig)) {
+                $Settings->bannerEnabledConfig = true;
+                $Settings->bannerEnabled = $pluginConfig['bannerEnabled'];
             }
 
             if (array_key_exists('bannerText', $pluginConfig)) {

@@ -14,15 +14,15 @@ class AnnounceController extends Controller
     protected array|int|bool $allowAnonymous = self::ALLOW_ANONYMOUS_NEVER;
 
     /**
-     * Welcome announcement.
-     * Show the welcome announcement depending on the settings
+     * Login announcement.
+     * Show the login announcement depending on the settings
      * for admin and non-admin users.
      *
      * @return Response
      */
-    public function actionWelcomeAnnouncement(): Response
+    public function actionLoginAnnouncement(): Response
     {
-        return $this->renderTemplate('announce/_welcome-announcement', [
+        return $this->renderTemplate('announce/_login-announcement', [
             'settings' => SettingsService::getSettings(),
         ]);
     }

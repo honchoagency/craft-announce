@@ -3,7 +3,7 @@
  * Announce plugin for Craft CMS
  *
  * Announce allows you to display an alert banner on the control panel
- * and display a welcome announcement after the login page.
+ * and display a announcement after the login page.
  *
  * @link      https://honcho.agency/
  * @copyright Copyright (c) 2025 Honcho
@@ -103,7 +103,7 @@ class Plugin extends BasePlugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function(RegisterUrlRulesEvent $event) {
-                $event->rules['welcome-announcement'] = 'announce/announce/welcome-announcement';
+                $event->rules['login-announcement'] = 'announce/announce/login-announcement';
 
                 // check user has permission for announcements
                 if (!Craft::$app->getUser()->checkPermission('announce')) {
@@ -119,7 +119,7 @@ class Plugin extends BasePlugin
             function (RegisterCpAlertsEvent $event) {
                 $settings = settings::getSettings();
 
-                if (!$settings->alertEnabled) {
+                if (!$settings->bannerEnabled) {
                     return;
                 }
 
@@ -163,12 +163,15 @@ class Plugin extends BasePlugin
                 $userSession = Craft::$app->getUser();
 
                 if ($request->getIsCpRequest()) {
-                    $userIsAdmin = Craft::$app->getUser()->getIsAdmin();
+                    $userIsAdmin = $userSession->getIsAdmin();
                     $Settings = settings::getSettings();
 
-                    // only redirect for users enabled to see the announcement
-                    if (($Settings->enabled && !$userIsAdmin) || (!$Settings->adminDisabled && $userIsAdmin)) {
-                        $userSession->setReturnUrl(UrlHelper::cpUrl('welcome-announcement'));
+                    if ($Settings->loginModalEnabled) {
+                        if ($userIsAdmin && $Settings->loginModalAdminDisabled) {
+                            $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
+                        } else {
+                            $userSession->setReturnUrl(UrlHelper::cpUrl('login-announcement'));
+                        }
                     } else {
                         $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
                     }
