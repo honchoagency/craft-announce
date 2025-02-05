@@ -29,10 +29,13 @@ class Install extends Migration
                 'linkText' => $this->text()->notNull(),
                 'link' => $this->text()->notNull(),
                 'enabled' => $this->boolean()->notNull()->defaultValue(true),
-                'adminEnabled' => $this->boolean()->notNull()->defaultValue(false),
+                'adminDisabled' => $this->boolean()->notNull()->defaultValue(false),
                 'continueButtonText' => $this->text()->notNull(),
                 'continueButtonURL' => $this->text()->notNull(),
                 'alertEnabled' => $this->boolean()->notNull()->defaultValue(true),
+                'bannerText' => $this->text()->notNull(),
+                'bannerLinkText' => $this->text()->notNull(),
+                'bannerLink' => $this->text()->notNull(),
             ]
         );
 

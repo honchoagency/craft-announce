@@ -9,10 +9,8 @@
 {% set fullPageForm = true %}
 
 {% set tabs = {
-    'alert': { label: 'Alert', url: '#announce-alert' },
-    'login': { label: 'Login', url: '#announce-login' },
-    'content': { label: 'Content', url: '#announce-content' },
-    'links': { label: 'Links', url: '#announce-links' }
+    'banner': { label: 'Banner', url: '#announce-alert' },
+    'modal': { label: 'Modal', url: '#announce-login' },
 } %}
 
 {% set crumbs = [
@@ -24,45 +22,61 @@
 
     <div>
         <div id="announce-alert">
-            <h3>Enable Alert Banner</h3>
-
             {{ forms.lightswitchField({
-                label: 'All Users',
+                label: 'Enabled',
                 name: 'alertEnabled',
                 on: settings.alertEnabled ?? "",
                 value: settings.alertEnabled,
                 warning: settings.alertEnabledConfig ? _self.warningString('alertEnabled')
             }) }}
+
+            {{ forms.textField({
+                label: 'Banner Text',
+                name: 'bannerText',
+                value: settings.bannerText,
+                warning: settings.bannerTextConfig ? _self.warningString('bannerText')
+            }) }}
+
+            {{ forms.textField({
+                label: 'Banner Link Text',
+                name: 'bannerLinkText',
+                value: settings.bannerLinkText,
+                instructions: 'Button does not show if blank.',
+                warning: settings.bannerLinkTextConfig ? _self.warningString('bannerLinkText')
+            }) }}
+
+            {{ forms.textField({
+                label: 'Banner Link URL',
+                name: 'bannerLink',
+                value: settings.bannerLink,
+                instructions: 'Opens in new window. \n Button does not show if blank.',
+                warning: settings.bannerLinkConfig ? _self.warningString('bannerLink')
+            }) }}
         </div>
 
         <div id="announce-login" class="hidden">
-            <h3>Enable Login Announcement</h3>
-
             {{ forms.lightswitchField({
-                label: 'Admins',
-                name: 'adminEnabled',
-                on: settings.adminEnabled ?? "",
-                value: settings.adminEnabled,
-                warning: settings.adminEnabledConfig ? _self.warningString('adminEnabled')
-            }) }}
-
-            {{ forms.lightswitchField({
-                label: 'Non Admins',
+                label: 'Enabled',
                 name: 'enabled',
                 on: settings.enabled ?? "",
                 value: settings.enabled,
                 warning: settings.enabledConfig ? _self.warningString('enabled')
             }) }}
 
-            <p><a href="/admin/welcome-announcement" class="go announce-dark-link" target="_blank">Login Announcement</a></p>
-        </div>
+            {{ forms.lightswitchField({
+                label: 'Disable for Admins',
+                name: 'adminDisabled',
+                on: settings.adminDisabled ?? "",
+                value: settings.adminDisabled,
+                warning: settings.adminDisabledConfig ? _self.warningString('adminDisabled')
+            }) }}
 
-        <div id="announce-content" class="hidden">
+            <p><a href="/admin/welcome-announcement" class="go announce-dark-link" target="_blank">View Login Modal</a></p>
+
             {{ forms.textField({
-                label: 'Announcement',
+                label: 'Title',
                 name: 'announcement',
                 value: settings.announcement,
-                instructions: 'Title of the announcement.',
                 required: true,
                 warning: settings.announcementConfig ? _self.warningString('announcement')
             }) }}
@@ -71,7 +85,6 @@
                 label: 'Body Text',
                 name: 'bodyText',
                 value: settings.bodyText,
-                instructions: 'Body text of the announcement.',
                 warning: settings.bodyTextConfig ? _self.warningString('bodyText')
             }) }}
 
@@ -90,14 +103,12 @@
                 instructions: 'Defaults to "Continue" if empty.',
                 warning: settings.continueButtonTextConfig ? _self.warningString('continueButtonText')
             }) }}
-        </div>
 
-        <div id="announce-links" class="hidden">
             {{ forms.textField({
                 label: 'Link Button URL',
                 name: 'link',
                 value: settings.link,
-                instructions: 'Link URL. Opens in new window. \n Button does not show if blank.',
+                instructions: 'Opens in new window. \n Button does not show if blank.',
                 warning: settings.linkConfig ? _self.warningString('link')
             }) }}
 
@@ -105,7 +116,7 @@
                 label: 'Continue Button Redirect URL',
                 name: 'continueButtonURL',
                 value: settings.continueButtonURL,
-                instructions: 'Redirect URL when login announcement button is clicked. \n Leave blank to redirect to the dashboard.',
+                instructions: 'Redirect URL when login modal button is clicked. \n Leave blank to redirect to the dashboard.',
                 warning: settings.continueButtonURLConfig ? _self.warningString('continueButtonURL')
             }) }}
         </div>

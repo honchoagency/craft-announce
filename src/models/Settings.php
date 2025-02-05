@@ -18,8 +18,8 @@ class Settings extends Model
     public ?bool $announcementConfig = false;
     public ?bool $enabled = true;
     public ?bool $enabledConfig = false;
-    public ?bool $adminEnabled = false;
-    public ?bool $adminEnabledConfig = false;
+    public ?bool $adminDisabled = false;
+    public ?bool $adminDisabledConfig = false;
     public ?string $bodyText = 'Your text here';
     public ?bool $bodyTextConfig = false;
     public ?string $linkText = 'Your link text here';
@@ -32,6 +32,12 @@ class Settings extends Model
     public ?bool $continueButtonURLConfig = false;
     public ?bool $alertEnabled = true;
     public ?bool $alertEnabledConfig = false;
+    public ?string $bannerText = 'Your banner text here';
+    public ?bool $bannerTextConfig = false;
+    public ?string $bannerLinkText = 'Your banner link text here';
+    public ?bool $bannerLinkTextConfig = false;
+    public ?string $bannerLink = '';
+    public ?bool $bannerLinkConfig = false;
 
     /**
      * @inheritdoc
@@ -40,8 +46,7 @@ class Settings extends Model
     {
         return array_merge(parent::defineRules(), [
             [['announcement'], 'required'],
-            [['link'], UrlValidator::class],
-            [['continueButtonURL'], UrlValidator::class]
+            [['link','bannerLink','continueButtonURL'], UrlValidator::class],
         ]);
     }
 
@@ -58,13 +63,16 @@ class Settings extends Model
         if ($SettingsRecord) {
             $Settings->announcement = $SettingsRecord->announcement;
             $Settings->enabled = $SettingsRecord->enabled;
-            $Settings->adminEnabled = $SettingsRecord->adminEnabled;
+            $Settings->adminDisabled = $SettingsRecord->adminDisabled;
             $Settings->bodyText = $SettingsRecord->bodyText;
             $Settings->linkText = $SettingsRecord->linkText;
             $Settings->link = $SettingsRecord->link;
             $Settings->continueButtonText = $SettingsRecord->continueButtonText;
             $Settings->continueButtonURL = $SettingsRecord->continueButtonURL;
             $Settings->alertEnabled = $SettingsRecord->alertEnabled;
+            $Settings->bannerText = $SettingsRecord->bannerText;
+            $Settings->bannerLinkText = $SettingsRecord->bannerLinkText;
+            $Settings->bannerLink = $SettingsRecord->bannerLink;
         }
 
         return self::configSettingsOverride($Settings);
@@ -82,13 +90,16 @@ class Settings extends Model
 
         $Settings->announcement = $requestParams['announcement'];
         $Settings->enabled = $requestParams['enabled'];
-        $Settings->adminEnabled = $requestParams['adminEnabled'];
+        $Settings->adminDisabled = $requestParams['adminDisabled'];
         $Settings->bodyText = $requestParams['bodyText'];
         $Settings->linkText = $requestParams['linkText'];
         $Settings->link = $requestParams['link'];
         $Settings->continueButtonText = $requestParams['continueButtonText'];
         $Settings->continueButtonURL = $requestParams['continueButtonURL'];
         $Settings->alertEnabled = $requestParams['alertEnabled'];
+        $Settings->bannerText = $requestParams['bannerText'];
+        $Settings->bannerLinkText = $requestParams['bannerLinkText'];
+        $Settings->bannerLink = $requestParams['bannerLink'];
 
         $Settings = self::configSettingsOverride($Settings);
 
@@ -102,18 +113,21 @@ class Settings extends Model
 
             $SettingsRecord->announcement = $Settings->announcement;
             $SettingsRecord->enabled = $Settings->enabled;
-            $SettingsRecord->adminEnabled = $Settings->adminEnabled;
+            $SettingsRecord->adminDisabled = $Settings->adminDisabled;
             $SettingsRecord->bodyText = $Settings->bodyText;
             $SettingsRecord->linkText = $Settings->linkText;
             $SettingsRecord->link = $Settings->link;
             $SettingsRecord->continueButtonText = $Settings->continueButtonText;
             $SettingsRecord->continueButtonURL = $Settings->continueButtonURL;
             $SettingsRecord->alertEnabled = $Settings->alertEnabled;
+            $SettingsRecord->bannerText = $Settings->bannerText;
+            $SettingsRecord->bannerLinkText = $Settings->bannerLinkText;
+            $SettingsRecord->bannerLink = $Settings->bannerLink;
 
             if ($SettingsRecord->save()) {
-                Craft::$app->getSession()->setNotice(Craft::t('announcements', 'Settings saved.'));
+                Craft::$app->getSession()->setNotice(Craft::t('announce', 'Settings saved.'));
             } else {
-                Craft::$app->getSession()->setError(Craft::t('announcements', 'Couldn’t save settings.'));
+                Craft::$app->getSession()->setError(Craft::t('announce', 'Couldn’t save settings.'));
             }
         } else {
             $errors = $Settings->getErrors();
@@ -146,9 +160,9 @@ class Settings extends Model
                 $Settings->enabled = $pluginConfig['enabled'];
             }
 
-            if (array_key_exists('adminEnabled', $pluginConfig)) {
-                $Settings->adminEnabledConfig = true;
-                $Settings->adminEnabled = $pluginConfig['adminEnabled'];
+            if (array_key_exists('adminDisabled', $pluginConfig)) {
+                $Settings->adminDisabledConfig = true;
+                $Settings->adminDisabled = $pluginConfig['adminDisabled'];
             }
 
             if (array_key_exists('bodyText', $pluginConfig)) {
@@ -179,6 +193,21 @@ class Settings extends Model
             if (array_key_exists('alertEnabled', $pluginConfig)) {
                 $Settings->alertEnabledConfig = true;
                 $Settings->alertEnabled = $pluginConfig['alertEnabled'];
+            }
+
+            if (array_key_exists('bannerText', $pluginConfig)) {
+                $Settings->bannerTextConfig = true;
+                $Settings->bannerText = $pluginConfig['bannerText'];
+            }
+
+            if (array_key_exists('bannerLinkText', $pluginConfig)) {
+                $Settings->bannerLinkTextConfig = true;
+                $Settings->bannerLinkText = $pluginConfig['bannerLinkText'];
+            }
+
+            if (array_key_exists('bannerLink', $pluginConfig)) {
+                $Settings->bannerLinkConfig = true;
+                $Settings->bannerLink = $pluginConfig['bannerLink'];
             }
         }
 
