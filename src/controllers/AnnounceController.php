@@ -4,7 +4,7 @@ namespace honcho\craftannounce\controllers;
 
 use craft\web\Controller;
 use yii\web\Response;
-use honcho\craftannouncements\services\Settings as SettingsService;
+use honcho\craftannounce\services\Settings as SettingsService;
 
 /**
  * Announce controller
@@ -22,7 +22,7 @@ class AnnounceController extends Controller
      */
     public function actionWelcomeAnnouncement(): Response
     {
-        return $this->renderTemplate('announcements/_welcome-announcement', [
+        return $this->renderTemplate('announce/_welcome-announcement', [
             'settings' => SettingsService::getSettings(),
         ]);
     }
