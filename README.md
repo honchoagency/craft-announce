@@ -17,6 +17,8 @@ Keep your clients and admin users informed with a simple announcement banner and
 
     <img src="./docs/resources/login-modal-announcement.png" alt="drawing" width="500"/>
 
+- **Database Settings**: The settings are not stored in the YAML files, but in the database. This allows for easy configuration and updating of the settings per environment.
+
 ## Requirements
 
 This plugin requires Craft CMS 5.5.0 or later, and PHP 8.2 or later.
@@ -46,6 +48,15 @@ Follow these steps to install Announce:
         ./craft plugin/install announce
 
     Alternatively, in the Control Panel, go to Settings → Plugins and click the “Install” button for Announce.
+
+## Config file
+
+You can create a `announce.php` file in your projects `config` directory to override the default settings.
+
+Use the config file here to copy over and get you started:
+
+[config.php](./config.php)
+
 
 ## Announce Roadmap
 
