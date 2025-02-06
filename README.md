@@ -55,7 +55,7 @@ You can create a `announce.php` file in your projects `config` directory to over
 
 Use the config file here to copy over and get you started:
 
-[config.php](./config.php)
+[config.php](./src/config.php)
 
 
 ## Announce Roadmap
