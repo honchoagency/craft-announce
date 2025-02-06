@@ -1,6 +1,21 @@
-# Announce
+<p align="center">
+    <img src="./docs/resources/Honcho-Entity.jpg" alt="drawing" width="500"/>
+</p>
 
-Display an announcement to admin users
+# Announce plugin for Craft CMS 5.5.0 or later
+
+Keep your clients and admin users informed with a simple announcement banner and login announcement modal.
+
+
+## Features
+
+- **Announcement Banner**: Display a simple announcement banner at the top of the page.
+
+    <img src="./docs/resources/announce-alert-banner.png" alt="drawing" width="500"/>
+
+- **Login Announcement Modal**: Display an announcement modal when users log in.
+
+    <img src="./docs/resources/login-modal-announcement.png" alt="drawing" width="500"/>
 
 ## Requirements
 
@@ -16,15 +31,31 @@ Go to the Plugin Store in your project’s Control Panel and search for “Annou
 
 #### With Composer
 
-Open your terminal and run the following commands:
+Follow these steps to install Announce:
 
-```bash
-# go to the project directory
-cd /path/to/my-project.test
+1. In your terminal, go to your Craft project:
 
-# tell Composer to load the plugin
-composer require honcho/craft-announce
+        cd /path/to/your-project
 
-# tell Craft to install the plugin
-./craft plugin/install announce
-```
+2. Run the composer require command for the plugin:
+
+        composer require honcho/craft-announce
+
+3. Then, in the CLI, install the plugin using:
+
+        ./craft plugin/install announce
+
+    Alternatively, in the Control Panel, go to Settings → Plugins and click the “Install” button for Announce.
+
+## Announce Roadmap
+
+Current plans for the future of Announce include:
+
+- **Multiple Announcements**: Allow for multiple announcements to be created and managed.
+
+
+
+Created by [Honcho](https://honcho.agency)
+
+
+
