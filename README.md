@@ -17,7 +17,7 @@ Keep your clients and admin users informed with a simple announcement banner and
 
     <img src="./docs/resources/login-modal-announcement.png" alt="drawing" width="500"/>
 
-- **Database Settings**: The settings are not stored in the YAML files, but in the database. This allows for easy configuration and updating of the settings per environment. The option to have the settings in the codebase is still available via a plugin config file.
+- **Database Settings**: The settings are not stored in the project config files, but in the database. This allows for easy configuration and updating of the settings per environment. The option to have the settings in the codebase is still available via a plugin config file.
 
 ## Requirements
 
