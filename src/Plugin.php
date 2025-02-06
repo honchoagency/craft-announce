@@ -86,7 +86,7 @@ class Plugin extends BasePlugin
 
         $navItem = [
             'url' => 'announce',
-            'label' => 'Announce',
+            'label' => Craft::t('announce','Announce'),
             'icon' => CRAFT_BASE_PATH . '/plugins/announce/src/icon-mask.svg',
         ];
 

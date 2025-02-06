@@ -1,5 +1,5 @@
 {% macro warningString(key) %}
-    This is being overridden by the <span style="font-weight: 500;">{{ key }}</span> setting in the <span style="font-weight: 500;">config/announce.php</span> file.
+    This is being overridden by the <span style="font-weight: 600;">`{{ key }}`</span> setting in the <span style="font-weight: 600;">`config/announce.php`</span> file.
 {% endmacro %}
 
 {% extends '_layouts/cp.twig' %}
@@ -9,8 +9,8 @@
 {% set fullPageForm = true %}
 
 {% set tabs = {
-    'banner': { label: 'Banner', url: '#announce-alert' },
-    'modal': { label: 'Modal', url: '#announce-modal' },
+    'banner': { label: 'Banner'|t('announce'), url: '#announce-alert' },
+    'modal': { label: 'Modal'|t('announce'), url: '#announce-modal' },
 } %}
 
 {% set crumbs = [
@@ -22,26 +22,25 @@
 
     <div>
         <div id="announce-alert">
-            <h2>Banner</h2>
+            <h2>{{ "Banner"|t('announce') }}</h2>
 
-            <p>The alert banner will display your announcement at the top of the page for all users.</p>
+            <p>{{ "The alert banner will display your announcement at the top of the page for all users."|t('announce') }}</p>
 
             {{ forms.lightswitchField({
-                label: 'Enabled',
+                label: 'Enabled'|t('announce'),
                 name: 'bannerEnabled',
                 on: settings.bannerEnabled ?? "",
-                value: settings.bannerEnabled,
                 warning: settings.bannerEnabledConfig ? _self.warningString('bannerEnabled')
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
-            <h2>Banner Content</h2>
+            <h2>{{ "Banner Content"|t('announce') }}</h2>
 
-            <p>The main announcement message for the alert banner.</p>
+            <p>{{ "The main announcement message for the alert banner."|t('announce') }}</p>
 
             {{ forms.textField({
-                label: 'Banner Text',
+                label: 'Banner Text'|t('announce'),
                 name: 'bannerText',
                 value: settings.bannerText,
                 required: true,
@@ -50,110 +49,108 @@
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
-            <h2>Banner Link</h2>
+            <h2>{{ "Banner Link"|t('announce') }}</h2>
 
-            <p>This link allows you to provide and external source for more information.</p>
+            <p>{{ "This link allows you to provide and external source for more information."|t('announce') }}</p>
 
             {{ forms.textField({
-                label: 'Banner Link Text',
+                label: 'Banner Link Text'|t('announce'),
                 name: 'bannerLinkText',
                 value: settings.bannerLinkText,
-                instructions: 'Button does not show if blank.',
+                instructions: 'Button does not show if blank.'|t('announce'),
                 warning: settings.bannerLinkTextConfig ? _self.warningString('bannerLinkText')
             }) }}
 
             {{ forms.textField({
-                label: 'Banner Link URL',
+                label: 'Banner Link URL'|t('announce'),
                 name: 'bannerLink',
                 value: settings.bannerLink,
-                instructions: 'Opens in new tab. \n Button does not show if blank.',
+                instructions: 'Opens in new tab. \n Button does not show if blank.'|t('announce'),
                 warning: settings.bannerLinkConfig ? _self.warningString('bannerLink')
             }) }}
         </div>
 
         <div id="announce-modal" class="hidden">
-            <h2>Login Modal</h2>
+            <h2>{{ "Login Modal"|t('announce') }}</h2>
 
-            <p>The login modal will display your announcement when users log in. <a href="/admin/login-announcement" class="go announce-dark-link" target="_blank">View Login Modal</a></p>
+            <p>{{ "The login modal will display your announcement when users log in."|t('announce') }} <a href='/admin/login-announcement' class='go announce-dark-link' target='_blank'>{{ "View Login Modal"|t('announce') }}</a></p>
 
             {{ forms.lightswitchField({
-                label: 'Enabled',
+                label: 'Enabled'|t('announce'),
                 name: 'loginModalEnabled',
                 on: settings.loginModalEnabled ?? "",
-                value: settings.loginModalEnabled,
                 warning: settings.loginModalEnabledConfig ? _self.warningString('loginModalEnabled')
             }) }}
 
             {{ forms.lightswitchField({
-                label: 'Disable for Admins',
+                label: 'Disable for Admins'|t('announce'),
                 name: 'loginModalAdminDisabled',
                 on: settings.loginModalAdminDisabled ?? "",
-                value: settings.loginModalAdminDisabled,
                 warning: settings.loginModalAdminDisabledConfig ? _self.warningString('loginModalAdminDisabled')
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
-            <h2>Modal Content</h2>
+            <h2>{{ "Modal Content"|t('announce') }}</h2>
 
             {{ forms.textField({
-                label: 'Title',
+                label: 'Title'|t('announce'),
                 name: 'loginModalTitle',
                 value: settings.loginModalTitle,
                 required: true,
-                instructions: 'The title of the modal loginModalTitle.',
+                instructions: 'The title of the modal loginModalTitle.'|t('announce'),
                 warning: settings.loginModalTitleConfig ? _self.warningString('loginModalTitle')
             }) }}
 
             {{ forms.textField({
-                label: 'Body Text',
+                label: 'Body Text'|t('announce'),
                 name: 'loginModalBodyText',
                 value: settings.loginModalBodyText,
-                instructions: 'The body text of the modal announcement.',
+                instructions: 'The body text of the modal announcement.'|t('announce'),
                 warning: settings.loginModalBodyTextConfig ? _self.warningString('loginModalBodyText')
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
-            <h2>Link Button</h2>
+            <h2>{{ "Link Button"|t('announce') }}</h2>
 
-            <p>This link allows you to provide and external source for more information.</p>
+            <p>{{ "This link allows you to provide and external source for more information."|t('announce') }}</p>
 
             {{ forms.textField({
-                label: 'Button Text',
+                label: 'Button Text'|t('announce'),
                 name: 'loginModalLinkText',
                 value: settings.loginModalLinkText,
-                instructions: 'Button does not show if blank.',
+                instructions: 'Button does not show if blank.'|t('announce'),
                 warning: settings.loginModalLinkTextConfig ? _self.warningString('loginModalLinkText')
             }) }}
 
             {{ forms.textField({
-                label: 'Button URL',
+                label: 'Button URL'|t('announce'),
                 name: 'loginModalLink',
                 value: settings.loginModalLink,
-                instructions: 'Opens in new tab. \n Button does not show if blank.',
+                instructions: 'Opens in new tab. \n Button does not show if blank.'|t('announce'),
                 warning: settings.loginModalLinkConfig ? _self.warningString('loginModalLink')
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
-            <h2>Continue Button</h2>
+            <h2>{{ "Continue Button"|t('announce') }}</h2>
 
-            <p>The user will click this to dismiss the modal announcement and continue to the admin.</p>
+            <p>{{ "The user will click this to dismiss the modal announcement and continue to the admin."|t('announce') }}</p>
 
             {{ forms.textField({
-                label: 'Button Text',
+                label: 'Button Text'|t('announce'),
                 name: 'loginModalContinueButtonText',
                 value: settings.loginModalContinueButtonText,
-                instructions: 'Defaults to "Continue" if empty.',
+                instructions: 'Defaults to "Continue" if empty.'|t('announce'),
                 warning: settings.loginModalContinueButtonTextConfig ? _self.warningString('loginModalContinueButtonText')
             }) }}
 
             {{ forms.textField({
-                label: 'Button Redirect URL',
+                label: 'Button Redirect URL'|t('announce'),
                 name: 'loginModalContinueButtonURL',
                 value: settings.loginModalContinueButtonURL,
-                instructions: 'Redirect URL when login modal button is clicked. \n Leave blank to redirect to the dashboard.',
+                instructions: 'Redirect URL when login modal button is clicked. \n Leave blank to redirect to the dashboard.'|t('announce'),
                 warning: settings.loginModalContinueButtonURLConfig ? _self.warningString('loginModalContinueButtonURL')
             }) }}
         </div>
