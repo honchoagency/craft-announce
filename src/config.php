@@ -2,7 +2,7 @@
 
 return [
     // Enable the alert banner for all users.
-    'bannerEnabled' => true,
+    'bannerEnabled' => false,
 
     // Banner Text
     'bannerText' => '',
@@ -14,10 +14,10 @@ return [
     'bannerLink' => '',
 
     // Enable the login modal
-    'loginModalEnabled' => true,
+    'loginModalEnabled' => false,
 
     // Disable the login modal for admins
-    'loginModalAdminDisabled' => false,
+    'loginModalAdminEnabled' => false,
 
     // Title of the login modal
     'loginModalTitle' => "",
