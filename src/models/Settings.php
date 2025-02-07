@@ -14,31 +14,33 @@ use honchoagency\craftannounce\records\Settings as SettingsRecord;
 class Settings extends Model
 {
     // Public Properties
-    public ?string $loginModalTitle = 'Your announcement here';
-    public ?bool $loginModalTitleConfig = false;
-    public ?bool $loginModalEnabled = false;
-    public ?bool $loginModalEnabledConfig = false;
-    public ?bool $loginModalAdminEnabled = true;
-    public ?bool $loginModalAdminEnabledConfig = false;
-    public ?string $loginModalBodyText = 'Your text here';
-    public ?bool $loginModalBodyTextConfig = false;
-    public ?string $loginModalLinkText = 'Your link text here';
-    public ?bool $loginModalLinkTextConfig = false;
-    public ?string $loginModalLink = '';
-    public ?bool $loginModalLinkConfig = false;
-    public ?string $loginModalContinueButtonText = 'Continue';
-    public ?string $loginModalContinueButtonURL = '';
-    public ?bool $loginModalContinueButtonTextConfig = false;
-    public ?bool $loginModalContinueButtonURLConfig = false;
-    public ?bool $bannerEnabled = false;
-    public ?bool $bannerEnabledConfig = false;
-    public ?string $bannerText = 'Your banner text here';
-    public ?bool $bannerTextConfig = false;
-    public ?string $bannerLinkText = 'Your banner link text here';
-    public ?bool $bannerLinkTextConfig = false;
-    public ?string $bannerLink = '';
-    public ?bool $bannerLinkConfig = false;
-    public ?bool $bannerLinkOpenInNewTab = true;
+    public string $loginModalTitle = '';
+    public bool $loginModalEnabled = false;
+    public bool $loginModalAdminEnabled = true;
+    public string $loginModalBodyText = '';
+    public string $loginModalLinkText = '';
+    public string $loginModalLink = '';
+    public string $loginModalContinueButtonText = '';
+    public string $loginModalContinueButtonURL = '';
+    public bool $bannerEnabled = false;
+    public string $bannerText = '';
+    public string $bannerLinkText = '';
+    public string $bannerLink = '';
+    public bool $bannerLinkOpenInNewTab = true;
+
+    // config override properties
+    public bool $loginModalTitleConfig = false;
+    public bool $loginModalEnabledConfig = false;
+    public bool $loginModalAdminEnabledConfig = false;
+    public bool $loginModalBodyTextConfig = false;
+    public bool $loginModalLinkTextConfig = false;
+    public bool $loginModalLinkConfig = false;
+    public bool $loginModalContinueButtonTextConfig = false;
+    public bool $loginModalContinueButtonURLConfig = false;
+    public bool $bannerTextConfig = false;
+    public bool $bannerEnabledConfig = false;
+    public bool $bannerLinkTextConfig = false;
+    public bool $bannerLinkConfig = false;
 
     /**
      * @inheritdoc
@@ -58,25 +60,25 @@ class Settings extends Model
      */
     static public function getSettings(): Settings
     {
-        $Settings = new Settings();
-        $SettingsRecord = SettingsRecord::findOne(['handle' => 'settings']);
+        $settings = new Settings();
+        $settingsRecord = SettingsRecord::findOne(['handle' => 'settings']);
 
-        if ($SettingsRecord) {
-            $Settings->loginModalTitle = $SettingsRecord->loginModalTitle;
-            $Settings->loginModalEnabled = $SettingsRecord->loginModalEnabled;
-            $Settings->loginModalAdminEnabled = $SettingsRecord->loginModalAdminEnabled;
-            $Settings->loginModalBodyText = $SettingsRecord->loginModalBodyText;
-            $Settings->loginModalLinkText = $SettingsRecord->loginModalLinkText;
-            $Settings->loginModalLink = $SettingsRecord->loginModalLink;
-            $Settings->loginModalContinueButtonText = $SettingsRecord->loginModalContinueButtonText;
-            $Settings->loginModalContinueButtonURL = $SettingsRecord->loginModalContinueButtonURL;
-            $Settings->bannerEnabled = $SettingsRecord->bannerEnabled;
-            $Settings->bannerText = $SettingsRecord->bannerText;
-            $Settings->bannerLinkText = $SettingsRecord->bannerLinkText;
-            $Settings->bannerLink = $SettingsRecord->bannerLink;
+        if ($settingsRecord) {
+            $settings->loginModalTitle = $settingsRecord->loginModalTitle;
+            $settings->loginModalEnabled = $settingsRecord->loginModalEnabled;
+            $settings->loginModalAdminEnabled = $settingsRecord->loginModalAdminEnabled;
+            $settings->loginModalBodyText = $settingsRecord->loginModalBodyText;
+            $settings->loginModalLinkText = $settingsRecord->loginModalLinkText;
+            $settings->loginModalLink = $settingsRecord->loginModalLink;
+            $settings->loginModalContinueButtonText = $settingsRecord->loginModalContinueButtonText;
+            $settings->loginModalContinueButtonURL = $settingsRecord->loginModalContinueButtonURL;
+            $settings->bannerEnabled = $settingsRecord->bannerEnabled;
+            $settings->bannerText = $settingsRecord->bannerText;
+            $settings->bannerLinkText = $settingsRecord->bannerLinkText;
+            $settings->bannerLink = $settingsRecord->bannerLink;
         }
 
-        return self::configSettingsOverride($Settings);
+        return self::configSettingsOverride($settings);
     }
 
     /**
@@ -86,52 +88,52 @@ class Settings extends Model
      */
     static public function saveSettings(): void
     {
-        $Settings = new Settings();
+        $settings = new Settings();
         $requestParams = Craft::$app->getRequest()->getBodyParams();
 
-        $Settings->loginModalTitle = $requestParams['loginModalTitle'];
-        $Settings->loginModalEnabled = $requestParams['loginModalEnabled'];
-        $Settings->loginModalAdminEnabled = $requestParams['loginModalAdminEnabled'];
-        $Settings->loginModalBodyText = $requestParams['loginModalBodyText'];
-        $Settings->loginModalLinkText = $requestParams['loginModalLinkText'];
-        $Settings->loginModalLink = $requestParams['loginModalLink'];
-        $Settings->loginModalContinueButtonText = $requestParams['loginModalContinueButtonText'];
-        $Settings->loginModalContinueButtonURL = $requestParams['loginModalContinueButtonURL'];
-        $Settings->bannerEnabled = $requestParams['bannerEnabled'];
-        $Settings->bannerText = $requestParams['bannerText'];
-        $Settings->bannerLinkText = $requestParams['bannerLinkText'];
-        $Settings->bannerLink = $requestParams['bannerLink'];
+        $settings->loginModalTitle = $requestParams['loginModalTitle'];
+        $settings->loginModalEnabled = $requestParams['loginModalEnabled'];
+        $settings->loginModalAdminEnabled = $requestParams['loginModalAdminEnabled'];
+        $settings->loginModalBodyText = $requestParams['loginModalBodyText'];
+        $settings->loginModalLinkText = $requestParams['loginModalLinkText'];
+        $settings->loginModalLink = $requestParams['loginModalLink'];
+        $settings->loginModalContinueButtonText = $requestParams['loginModalContinueButtonText'];
+        $settings->loginModalContinueButtonURL = $requestParams['loginModalContinueButtonURL'];
+        $settings->bannerEnabled = $requestParams['bannerEnabled'];
+        $settings->bannerText = $requestParams['bannerText'];
+        $settings->bannerLinkText = $requestParams['bannerLinkText'];
+        $settings->bannerLink = $requestParams['bannerLink'];
 
-        $Settings = self::configSettingsOverride($Settings);
+        $settings = self::configSettingsOverride($settings);
 
-        if ($Settings->validate()) {
-            $SettingsRecord = SettingsRecord::findOne(['handle' => 'settings']);
+        if ($settings->validate()) {
+            $settingsRecord = SettingsRecord::findOne(['handle' => 'settings']);
 
-            if (!$SettingsRecord) {
-                $SettingsRecord = new SettingsRecord();
-                $SettingsRecord->handle = 'settings';
+            if (!$settingsRecord) {
+                $settingsRecord = new SettingsRecord();
+                $settingsRecord->handle = 'settings';
             }
 
-            $SettingsRecord->loginModalTitle = $Settings->loginModalTitle;
-            $SettingsRecord->loginModalEnabled = $Settings->loginModalEnabled;
-            $SettingsRecord->loginModalAdminEnabled = $Settings->loginModalAdminEnabled;
-            $SettingsRecord->loginModalBodyText = $Settings->loginModalBodyText;
-            $SettingsRecord->loginModalLinkText = $Settings->loginModalLinkText;
-            $SettingsRecord->loginModalLink = $Settings->loginModalLink;
-            $SettingsRecord->loginModalContinueButtonText = $Settings->loginModalContinueButtonText;
-            $SettingsRecord->loginModalContinueButtonURL = $Settings->loginModalContinueButtonURL;
-            $SettingsRecord->bannerEnabled = $Settings->bannerEnabled;
-            $SettingsRecord->bannerText = $Settings->bannerText;
-            $SettingsRecord->bannerLinkText = $Settings->bannerLinkText;
-            $SettingsRecord->bannerLink = $Settings->bannerLink;
+            $settingsRecord->loginModalTitle = $settings->loginModalTitle;
+            $settingsRecord->loginModalEnabled = $settings->loginModalEnabled;
+            $settingsRecord->loginModalAdminEnabled = $settings->loginModalAdminEnabled;
+            $settingsRecord->loginModalBodyText = $settings->loginModalBodyText;
+            $settingsRecord->loginModalLinkText = $settings->loginModalLinkText;
+            $settingsRecord->loginModalLink = $settings->loginModalLink;
+            $settingsRecord->loginModalContinueButtonText = $settings->loginModalContinueButtonText;
+            $settingsRecord->loginModalContinueButtonURL = $settings->loginModalContinueButtonURL;
+            $settingsRecord->bannerEnabled = $settings->bannerEnabled;
+            $settingsRecord->bannerText = $settings->bannerText;
+            $settingsRecord->bannerLinkText = $settings->bannerLinkText;
+            $settingsRecord->bannerLink = $settings->bannerLink;
 
-            if ($SettingsRecord->save()) {
+            if ($settingsRecord->save()) {
                 Craft::$app->getSession()->setNotice(Craft::t('announce', 'Settings saved.'));
             } else {
                 Craft::$app->getSession()->setError(Craft::t('announce', 'Couldn’t save settings.'));
             }
         } else {
-            $errors = $Settings->getErrors();
+            $errors = $settings->getErrors();
 
             foreach ($errors as $error) {
                 Craft::$app->getSession()->setError($error[0]);
@@ -142,76 +144,76 @@ class Settings extends Model
     /**
      * Update/override settings from config if set
      *
-     * @param Settings $Settings
+     * @param Settings $settings
      * @param array $pluginConfig
      * @return Settings
      */
-    static private function configSettingsOverride(Settings $Settings): Settings
+    static private function configSettingsOverride(Settings $settings): Settings
     {
         $pluginConfig = Plugin::getInstance()->pluginConfig;
 
         if ($pluginConfig != []) {
             if (array_key_exists('loginModalTitle', $pluginConfig)) {
-                $Settings->loginModalTitleConfig = true;
-                $Settings->loginModalTitle = $pluginConfig['loginModalTitle'];
+                $settings->loginModalTitleConfig = true;
+                $settings->loginModalTitle = $pluginConfig['loginModalTitle'];
             }
 
             if (array_key_exists('loginModalEnabled', $pluginConfig)) {
-                $Settings->loginModalEnabledConfig = true;
-                $Settings->loginModalEnabled = $pluginConfig['loginModalEnabled'];
+                $settings->loginModalEnabledConfig = true;
+                $settings->loginModalEnabled = $pluginConfig['loginModalEnabled'];
             }
 
             if (array_key_exists('loginModalAdminEnabled', $pluginConfig)) {
-                $Settings->loginModalAdminEnabledConfig = true;
-                $Settings->loginModalAdminEnabled = $pluginConfig['loginModalAdminEnabled'];
+                $settings->loginModalAdminEnabledConfig = true;
+                $settings->loginModalAdminEnabled = $pluginConfig['loginModalAdminEnabled'];
             }
 
             if (array_key_exists('loginModalBodyText', $pluginConfig)) {
-                $Settings->loginModalBodyTextConfig = true;
-                $Settings->loginModalBodyText = $pluginConfig['loginModalBodyText'];
+                $settings->loginModalBodyTextConfig = true;
+                $settings->loginModalBodyText = $pluginConfig['loginModalBodyText'];
             }
 
             if (array_key_exists('loginModalLinkText', $pluginConfig)) {
-                $Settings->loginModalLinkTextConfig = true;
-                $Settings->loginModalLinkText = $pluginConfig['loginModalLinkText'];
+                $settings->loginModalLinkTextConfig = true;
+                $settings->loginModalLinkText = $pluginConfig['loginModalLinkText'];
             }
 
             if (array_key_exists('loginModalLink', $pluginConfig)) {
-                $Settings->loginModalLinkConfig = true;
-                $Settings->loginModalLink = $pluginConfig['loginModalLink'];
+                $settings->loginModalLinkConfig = true;
+                $settings->loginModalLink = $pluginConfig['loginModalLink'];
             }
 
             if (array_key_exists('loginModalContinueButtonText', $pluginConfig)) {
-                $Settings->loginModalContinueButtonTextConfig = true;
-                $Settings->loginModalContinueButtonText = $pluginConfig['loginModalContinueButtonText'];
+                $settings->loginModalContinueButtonTextConfig = true;
+                $settings->loginModalContinueButtonText = $pluginConfig['loginModalContinueButtonText'];
             }
 
             if (array_key_exists('loginModalContinueButtonURL', $pluginConfig)) {
-                $Settings->loginModalContinueButtonURLConfig = true;
-                $Settings->loginModalContinueButtonURL = $pluginConfig['loginModalContinueButtonURL'];
+                $settings->loginModalContinueButtonURLConfig = true;
+                $settings->loginModalContinueButtonURL = $pluginConfig['loginModalContinueButtonURL'];
             }
 
             if (array_key_exists('bannerEnabled', $pluginConfig)) {
-                $Settings->bannerEnabledConfig = true;
-                $Settings->bannerEnabled = $pluginConfig['bannerEnabled'];
+                $settings->bannerEnabledConfig = true;
+                $settings->bannerEnabled = $pluginConfig['bannerEnabled'];
             }
 
             if (array_key_exists('bannerText', $pluginConfig)) {
-                $Settings->bannerTextConfig = true;
-                $Settings->bannerText = $pluginConfig['bannerText'];
+                $settings->bannerTextConfig = true;
+                $settings->bannerText = $pluginConfig['bannerText'];
             }
 
             if (array_key_exists('bannerLinkText', $pluginConfig)) {
-                $Settings->bannerLinkTextConfig = true;
-                $Settings->bannerLinkText = $pluginConfig['bannerLinkText'];
+                $settings->bannerLinkTextConfig = true;
+                $settings->bannerLinkText = $pluginConfig['bannerLinkText'];
             }
 
             if (array_key_exists('bannerLink', $pluginConfig)) {
-                $Settings->bannerLinkConfig = true;
-                $Settings->bannerLink = $pluginConfig['bannerLink'];
+                $settings->bannerLinkConfig = true;
+                $settings->bannerLink = $pluginConfig['bannerLink'];
             }
         }
 
-        return $Settings;
+        return $settings;
     }
 }
