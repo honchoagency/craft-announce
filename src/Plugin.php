@@ -15,10 +15,8 @@ use Craft;
 use craft\base\Plugin as BasePlugin;
 use craft\events\RegisterCpAlertsEvent;
 use craft\events\RegisterUrlRulesEvent;
-use craft\events\RegisterUserPermissionsEvent;
 use craft\helpers\Cp as CpHelper;
 use craft\helpers\UrlHelper;
-use craft\services\UserPermissions;
 use craft\web\UrlManager;
 use honchoagency\craftannounce\services\Settings;
 use yii\base\Event;
@@ -117,7 +115,7 @@ class Plugin extends BasePlugin
             CpHelper::class,
             CpHelper::EVENT_REGISTER_ALERTS,
             function (RegisterCpAlertsEvent $event) {
-                $settings = settings::getSettings();
+                $settings = $this->settings->getSettings();
 
                 if (!$settings->bannerEnabled || !$settings->bannerText) {
                     return;
@@ -149,10 +147,10 @@ class Plugin extends BasePlugin
 
                 if ($request->getIsCpRequest()) {
                     $userIsAdmin = $userSession->getIsAdmin();
-                    $Settings = settings::getSettings();
+                    $settings = $this->settings->getSettings();
 
-                    if ($Settings->loginModalEnabled) {
-                        if ($userIsAdmin && $Settings->loginModalAdminEnabled) {
+                    if ($settings->loginModalEnabled) {
+                        if ($userIsAdmin && $settings->loginModalAdminEnabled) {
                             $userSession->setReturnUrl(UrlHelper::cpUrl('login-announcement'));
                         }
                     }

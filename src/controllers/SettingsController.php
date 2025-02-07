@@ -4,7 +4,6 @@ namespace honchoagency\craftannounce\controllers;
 
 use craft\web\Controller;
 use yii\web\Response;
-use honchoagency\craftannounce\services\Settings as SettingsService;
 use honchoagency\craftannounce\Plugin;
 
 /**
@@ -19,7 +18,7 @@ class SettingsController extends Controller
      */
     public function actionSettings(): Response
     {
-        $Settings = SettingsService::getSettings();
+        $Settings = Plugin::getInstance()->settings->getSettings();
         $config = Plugin::getInstance()->pluginConfig;
 
         return $this->renderTemplate('announce/_settings', [
@@ -34,6 +33,6 @@ class SettingsController extends Controller
     public function actionSaveSettings(): void
     {
         $this->requirePostRequest();
-        SettingsService::saveSettings();
+        Plugin::getInstance()->settings->saveSettings();
     }
 }

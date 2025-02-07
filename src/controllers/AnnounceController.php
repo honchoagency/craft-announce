@@ -5,6 +5,8 @@ namespace honchoagency\craftannounce\controllers;
 use craft\web\Controller;
 use yii\web\Response;
 use honchoagency\craftannounce\services\Settings as SettingsService;
+use honchoagency\craftannounce\Plugin;
+
 
 /**
  * Announce controller
@@ -22,8 +24,10 @@ class AnnounceController extends Controller
      */
     public function actionLoginAnnouncement(): Response
     {
+        $settings = Plugin::getInstance()->settings->getSettings();
+
         return $this->renderTemplate('announce/_login-announcement', [
-            'settings' => SettingsService::getSettings(),
+            'settings' => $settings,
         ]);
     }
 }
