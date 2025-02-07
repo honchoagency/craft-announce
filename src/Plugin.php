@@ -90,7 +90,7 @@ class Plugin extends BasePlugin
             'icon' => CRAFT_BASE_PATH . '/plugins/announce/src/icon-mask.svg',
         ];
 
-        if (!Craft::$app->getUser()->checkPermission('announce')) {
+        if (!Craft::$app->getUser()->checkPermission('accessPlugin-announce')) {
             return $navItem = null;
         }
 
@@ -106,7 +106,7 @@ class Plugin extends BasePlugin
                 $event->rules['login-announcement'] = 'announce/announce/login-announcement';
 
                 // check user has permission for announcements
-                if (!Craft::$app->getUser()->checkPermission('announce')) {
+                if (!Craft::$app->getUser()->checkPermission('accessPlugin-announce')) {
                     return;
                 }
                 $event->rules['announce'] = 'announce/settings/settings';
@@ -137,21 +137,6 @@ class Plugin extends BasePlugin
                         'showIcon' => false,
                     ],
                 ]);
-            }
-        );
-
-        Event::on(
-            UserPermissions::class,
-            UserPermissions::EVENT_REGISTER_PERMISSIONS,
-            function (RegisterUserPermissionsEvent $event) {
-                $event->permissions[] = [
-                    'heading' => 'Announce',
-                    'permissions' => [
-                        'announce' => [
-                            'label' => 'Access Announce',
-                        ],
-                    ],
-                ];
             }
         );
 
