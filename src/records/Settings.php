@@ -1,6 +1,6 @@
 <?php
 
-namespace honcho\craftannounce\records;
+namespace honchoagency\craftannounce\records;
 
 use Craft;
 use craft\db\ActiveRecord;

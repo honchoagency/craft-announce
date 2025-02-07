@@ -1,10 +1,10 @@
 <?php
 
-namespace honcho\craftannounce\services;
+namespace honchoagency\craftannounce\services;
 
 use Craft;
 use yii\base\Component;
-use honcho\craftannounce\models\Settings as SettingsModel;
+use honchoagency\craftannounce\models\Settings as SettingsModel;
 
 /**
  * Settings service

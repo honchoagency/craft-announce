@@ -1,10 +1,10 @@
 <?php
 
-namespace honcho\craftannounce\controllers;
+namespace honchoagency\craftannounce\controllers;
 
 use craft\web\Controller;
 use yii\web\Response;
-use honcho\craftannounce\services\Settings as SettingsService;
+use honchoagency\craftannounce\services\Settings as SettingsService;
 
 /**
  * Settings controller

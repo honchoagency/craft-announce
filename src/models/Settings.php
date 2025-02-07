@@ -1,12 +1,12 @@
 <?php
 
-namespace honcho\craftannounce\models;
+namespace honchoagency\craftannounce\models;
 
 use Craft;
 use craft\base\Model;
 use craft\validators\UrlValidator;
-use honcho\craftannounce\Plugin;
-use honcho\craftannounce\records\Settings as SettingsRecord;
+use honchoagency\craftannounce\Plugin;
+use honchoagency\craftannounce\records\Settings as SettingsRecord;
 
 /**
  * Settings model
@@ -16,10 +16,10 @@ class Settings extends Model
     // Public Properties
     public ?string $loginModalTitle = 'Your announcement here';
     public ?bool $loginModalTitleConfig = false;
-    public ?bool $loginModalEnabled = true;
+    public ?bool $loginModalEnabled = false;
     public ?bool $loginModalEnabledConfig = false;
-    public ?bool $loginModalAdminDisabled = false;
-    public ?bool $loginModalAdminDisabledConfig = false;
+    public ?bool $loginModalAdminEnabled = true;
+    public ?bool $loginModalAdminEnabledConfig = false;
     public ?string $loginModalBodyText = 'Your text here';
     public ?bool $loginModalBodyTextConfig = false;
     public ?string $loginModalLinkText = 'Your link text here';
@@ -30,7 +30,7 @@ class Settings extends Model
     public ?string $loginModalContinueButtonURL = '';
     public ?bool $loginModalContinueButtonTextConfig = false;
     public ?bool $loginModalContinueButtonURLConfig = false;
-    public ?bool $bannerEnabled = true;
+    public ?bool $bannerEnabled = false;
     public ?bool $bannerEnabledConfig = false;
     public ?string $bannerText = 'Your banner text here';
     public ?bool $bannerTextConfig = false;
@@ -38,6 +38,7 @@ class Settings extends Model
     public ?bool $bannerLinkTextConfig = false;
     public ?string $bannerLink = '';
     public ?bool $bannerLinkConfig = false;
+    public ?bool $bannerLinkOpenInNewTab = true;
 
     /**
      * @inheritdoc
@@ -63,7 +64,7 @@ class Settings extends Model
         if ($SettingsRecord) {
             $Settings->loginModalTitle = $SettingsRecord->loginModalTitle;
             $Settings->loginModalEnabled = $SettingsRecord->loginModalEnabled;
-            $Settings->loginModalAdminDisabled = $SettingsRecord->loginModalAdminDisabled;
+            $Settings->loginModalAdminEnabled = $SettingsRecord->loginModalAdminEnabled;
             $Settings->loginModalBodyText = $SettingsRecord->loginModalBodyText;
             $Settings->loginModalLinkText = $SettingsRecord->loginModalLinkText;
             $Settings->loginModalLink = $SettingsRecord->loginModalLink;
@@ -90,7 +91,7 @@ class Settings extends Model
 
         $Settings->loginModalTitle = $requestParams['loginModalTitle'];
         $Settings->loginModalEnabled = $requestParams['loginModalEnabled'];
-        $Settings->loginModalAdminDisabled = $requestParams['loginModalAdminDisabled'];
+        $Settings->loginModalAdminEnabled = $requestParams['loginModalAdminEnabled'];
         $Settings->loginModalBodyText = $requestParams['loginModalBodyText'];
         $Settings->loginModalLinkText = $requestParams['loginModalLinkText'];
         $Settings->loginModalLink = $requestParams['loginModalLink'];
@@ -113,7 +114,7 @@ class Settings extends Model
 
             $SettingsRecord->loginModalTitle = $Settings->loginModalTitle;
             $SettingsRecord->loginModalEnabled = $Settings->loginModalEnabled;
-            $SettingsRecord->loginModalAdminDisabled = $Settings->loginModalAdminDisabled;
+            $SettingsRecord->loginModalAdminEnabled = $Settings->loginModalAdminEnabled;
             $SettingsRecord->loginModalBodyText = $Settings->loginModalBodyText;
             $SettingsRecord->loginModalLinkText = $Settings->loginModalLinkText;
             $SettingsRecord->loginModalLink = $Settings->loginModalLink;
@@ -160,9 +161,9 @@ class Settings extends Model
                 $Settings->loginModalEnabled = $pluginConfig['loginModalEnabled'];
             }
 
-            if (array_key_exists('loginModalAdminDisabled', $pluginConfig)) {
-                $Settings->loginModalAdminDisabledConfig = true;
-                $Settings->loginModalAdminDisabled = $pluginConfig['loginModalAdminDisabled'];
+            if (array_key_exists('loginModalAdminEnabled', $pluginConfig)) {
+                $Settings->loginModalAdminEnabledConfig = true;
+                $Settings->loginModalAdminEnabled = $pluginConfig['loginModalAdminEnabled'];
             }
 
             if (array_key_exists('loginModalBodyText', $pluginConfig)) {

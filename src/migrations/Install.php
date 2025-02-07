@@ -1,6 +1,6 @@
 <?php
 
-namespace honcho\craftannounce\migrations;
+namespace honchoagency\craftannounce\migrations;
 
 use Craft;
 use craft\db\Migration;
@@ -29,7 +29,7 @@ class Install extends Migration
                 'loginModalLinkText' => $this->text()->notNull(),
                 'loginModalLink' => $this->text()->notNull(),
                 'loginModalEnabled' => $this->boolean()->notNull()->defaultValue(true),
-                'loginModalAdminDisabled' => $this->boolean()->notNull()->defaultValue(false),
+                'loginModalAdminEnabled' => $this->boolean()->notNull()->defaultValue(false),
                 'loginModalContinueButtonText' => $this->text()->notNull(),
                 'loginModalContinueButtonURL' => $this->text()->notNull(),
                 'bannerEnabled' => $this->boolean()->notNull()->defaultValue(true),

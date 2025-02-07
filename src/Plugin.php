@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2025 Honcho
  */
 
-namespace honcho\craftannounce;
+namespace honchoagency\craftannounce;
 
 use Craft;
 use craft\base\Plugin as BasePlugin;
@@ -20,7 +20,7 @@ use craft\helpers\Cp as CpHelper;
 use craft\helpers\UrlHelper;
 use craft\services\UserPermissions;
 use craft\web\UrlManager;
-use honcho\craftannounce\services\Settings;
+use honchoagency\craftannounce\services\Settings;
 use yii\base\Event;
 use yii\web\User;
 
@@ -119,7 +119,7 @@ class Plugin extends BasePlugin
             function (RegisterCpAlertsEvent $event) {
                 $settings = settings::getSettings();
 
-                if (!$settings->bannerEnabled) {
+                if (!$settings->bannerEnabled || !$settings->bannerText) {
                     return;
                 }
 
@@ -128,7 +128,7 @@ class Plugin extends BasePlugin
                 $alertHTML .= $settings->bannerText;
 
                 if ($settings->bannerLink && $settings->bannerLinkText) {
-                    $alertHTML .= ' <a href="' . $settings->bannerLink . '" target="_blank" class="go">' . $settings->bannerLinkText . '</a>';
+                    $alertHTML .= ' <a href="' . $settings->bannerLink . '" class="go">' . $settings->bannerLinkText . '</a>';
                 }
 
                 $event->alerts = array_merge($event->alerts, [
@@ -167,10 +167,10 @@ class Plugin extends BasePlugin
                     $Settings = settings::getSettings();
 
                     if ($Settings->loginModalEnabled) {
-                        if ($userIsAdmin && $Settings->loginModalAdminDisabled) {
-                            $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
-                        } else {
+                        if ($userIsAdmin && $Settings->loginModalAdminEnabled) {
                             $userSession->setReturnUrl(UrlHelper::cpUrl('login-announcement'));
+                        } else {
+                            $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
                         }
                     } else {
                         $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
