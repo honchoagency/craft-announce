@@ -11,7 +11,7 @@
 {% set loginModalBodyText = settings.loginModalBodyText ?? null %}
 {% set loginModalLinkText = settings.loginModalLinkText ?? null %}
 {% set loginModalLink = settings.loginModalLink ?? null %}
-{% set loginModalContinueButtonText = settings.loginModalContinueButtonText ?? null %}
+{% set loginModalContinueButtonText = settings.loginModalContinueButtonText is not empty ? settings.loginModalContinueButtonText : "Continue" %}
 {% set loginModalContinueButtonURL = settings.loginModalContinueButtonURL ?? null %}
 
 {% block body %}
@@ -39,7 +39,7 @@
 
                 <div class="buttons" style="justify-content: space-between;">
                     {% if loginModalLink and loginModalLinkText is not empty %}
-                        <a href="{{ loginModalLink }}" target="_blank" class="btn link-btn go">
+                        <a href="{{ loginModalLink }}" class="btn link-btn go">
                             {{ loginModalLinkText }}
                         </a>
                     {% endif %}
