@@ -28,20 +28,6 @@ class Settings extends Model
     public string $bannerLink = '';
     public bool $bannerLinkOpenInNewTab = true;
 
-    // config override properties
-    public bool $loginModalTitleConfig = false;
-    public bool $loginModalEnabledConfig = false;
-    public bool $loginModalAdminEnabledConfig = false;
-    public bool $loginModalBodyTextConfig = false;
-    public bool $loginModalLinkTextConfig = false;
-    public bool $loginModalLinkConfig = false;
-    public bool $loginModalContinueButtonTextConfig = false;
-    public bool $loginModalContinueButtonURLConfig = false;
-    public bool $bannerTextConfig = false;
-    public bool $bannerEnabledConfig = false;
-    public bool $bannerLinkTextConfig = false;
-    public bool $bannerLinkConfig = false;
-
     /**
      * @inheritdoc
      */
@@ -78,7 +64,7 @@ class Settings extends Model
             $settings->bannerLink = $settingsRecord->bannerLink;
         }
 
-        return self::configSettingsOverride($settings);
+        return $settings;
     }
 
     /**
@@ -103,8 +89,6 @@ class Settings extends Model
         $settings->bannerText = $requestParams['bannerText'];
         $settings->bannerLinkText = $requestParams['bannerLinkText'];
         $settings->bannerLink = $requestParams['bannerLink'];
-
-        $settings = self::configSettingsOverride($settings);
 
         if ($settings->validate()) {
             $settingsRecord = SettingsRecord::findOne(['handle' => 'settings']);
@@ -139,81 +123,5 @@ class Settings extends Model
                 Craft::$app->getSession()->setError($error[0]);
             }
         }
-    }
-
-    /**
-     * Update/override settings from config if set
-     *
-     * @param Settings $settings
-     * @param array $pluginConfig
-     * @return Settings
-     */
-    static private function configSettingsOverride(Settings $settings): Settings
-    {
-        $pluginConfig = Plugin::getInstance()->pluginConfig;
-
-        if ($pluginConfig != []) {
-            if (array_key_exists('loginModalTitle', $pluginConfig)) {
-                $settings->loginModalTitleConfig = true;
-                $settings->loginModalTitle = $pluginConfig['loginModalTitle'];
-            }
-
-            if (array_key_exists('loginModalEnabled', $pluginConfig)) {
-                $settings->loginModalEnabledConfig = true;
-                $settings->loginModalEnabled = $pluginConfig['loginModalEnabled'];
-            }
-
-            if (array_key_exists('loginModalAdminEnabled', $pluginConfig)) {
-                $settings->loginModalAdminEnabledConfig = true;
-                $settings->loginModalAdminEnabled = $pluginConfig['loginModalAdminEnabled'];
-            }
-
-            if (array_key_exists('loginModalBodyText', $pluginConfig)) {
-                $settings->loginModalBodyTextConfig = true;
-                $settings->loginModalBodyText = $pluginConfig['loginModalBodyText'];
-            }
-
-            if (array_key_exists('loginModalLinkText', $pluginConfig)) {
-                $settings->loginModalLinkTextConfig = true;
-                $settings->loginModalLinkText = $pluginConfig['loginModalLinkText'];
-            }
-
-            if (array_key_exists('loginModalLink', $pluginConfig)) {
-                $settings->loginModalLinkConfig = true;
-                $settings->loginModalLink = $pluginConfig['loginModalLink'];
-            }
-
-            if (array_key_exists('loginModalContinueButtonText', $pluginConfig)) {
-                $settings->loginModalContinueButtonTextConfig = true;
-                $settings->loginModalContinueButtonText = $pluginConfig['loginModalContinueButtonText'];
-            }
-
-            if (array_key_exists('loginModalContinueButtonURL', $pluginConfig)) {
-                $settings->loginModalContinueButtonURLConfig = true;
-                $settings->loginModalContinueButtonURL = $pluginConfig['loginModalContinueButtonURL'];
-            }
-
-            if (array_key_exists('bannerEnabled', $pluginConfig)) {
-                $settings->bannerEnabledConfig = true;
-                $settings->bannerEnabled = $pluginConfig['bannerEnabled'];
-            }
-
-            if (array_key_exists('bannerText', $pluginConfig)) {
-                $settings->bannerTextConfig = true;
-                $settings->bannerText = $pluginConfig['bannerText'];
-            }
-
-            if (array_key_exists('bannerLinkText', $pluginConfig)) {
-                $settings->bannerLinkTextConfig = true;
-                $settings->bannerLinkText = $pluginConfig['bannerLinkText'];
-            }
-
-            if (array_key_exists('bannerLink', $pluginConfig)) {
-                $settings->bannerLinkConfig = true;
-                $settings->bannerLink = $pluginConfig['bannerLink'];
-            }
-        }
-
-        return $settings;
     }
 }

@@ -1,12 +1,16 @@
-{% macro warningString(key) %}
-    This is being overridden by the <span style="font-weight: 600;">`{{ key }}`</span> setting in the <span style="font-weight: 600;">`config/announce.php`</span> file.
-{% endmacro %}
+{% macro warning(key, file) -%}
+    {%- set configArray = craft.app.config.getConfigFromFile(file) -%}
+    {%- if configArray[key] is defined -%}
+        {{- "This is being overridden by the <span style='font-weight: 600;'>`#{ key }`</span> setting in the <span style='font-weight: 600;'>`config/#{ file }.php`</span> file."|raw }}
+    {%- endif -%}
+{%- endmacro %}
 
 {% extends '_layouts/cp.twig' %}
 {% import '_includes/forms.twig' as forms %}
 
 {% set title = 'Announce' %}
 {% set fullPageForm = true %}
+{% set configFileName = "announce" %}
 
 {% set tabs = {
     'banner': { label: 'Banner'|t('announce'), url: '#announce-alert' },
@@ -29,8 +33,8 @@
             {{ forms.lightswitchField({
                 label: 'Enabled'|t('announce'),
                 name: 'bannerEnabled',
-                on: settings.bannerEnabled ?? "",
-                warning: settings.bannerEnabledConfig ? _self.warningString('bannerEnabled')
+                on: config.bannerEnabled ?? settings.bannerEnabled ?? "",
+                warning: _self.warning('bannerEnabled', configFileName)
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
@@ -42,9 +46,9 @@
             {{ forms.textField({
                 label: 'Banner Text'|t('announce'),
                 name: 'bannerText',
-                value: settings.bannerText,
+                value: config.bannerText ?? settings.bannerText,
                 required: true,
-                warning: settings.bannerTextConfig ? _self.warningString('bannerText')
+                warning: _self.warning('bannerText', configFileName)
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
@@ -56,17 +60,17 @@
             {{ forms.textField({
                 label: 'Banner Link Text'|t('announce'),
                 name: 'bannerLinkText',
-                value: settings.bannerLinkText,
+                value: config.bannerLinkText ?? settings.bannerLinkText,
                 instructions: 'Button does not show if blank.'|t('announce'),
-                warning: settings.bannerLinkTextConfig ? _self.warningString('bannerLinkText')
+                warning: _self.warning('bannerLinkText', configFileName)
             }) }}
 
             {{ forms.textField({
                 label: 'Banner Link URL'|t('announce'),
                 name: 'bannerLink',
-                value: settings.bannerLink,
+                value: config.bannerLink ?? settings.bannerLink,
                 instructions: 'Opens in new tab. \n Button does not show if blank.'|t('announce'),
-                warning: settings.bannerLinkConfig ? _self.warningString('bannerLink')
+                warning: _self.warning('bannerLink', configFileName)
             }) }}
         </div>
 
@@ -78,9 +82,9 @@
             {{ forms.lightswitchField({
                 label: 'Enabled'|t('announce'),
                 name: 'loginModalEnabled',
-                on: settings.loginModalEnabled ?? "",
+                on: config.loginModalEnabled ?? settings.loginModalEnabled ?? "",
                 instructions: 'Enable for all users.'|t('announce'),
-                warning: settings.loginModalEnabledConfig ? _self.warningString('loginModalEnabled'),
+                warning: _self.warning('loginModalEnabled', configFileName),
                 toggle: "#login-modal-admins"
             }) }}
 
@@ -88,9 +92,9 @@
                 {{ forms.lightswitchField({
                     label: 'Enabled for Admins'|t('announce'),
                     name: 'loginModalAdminEnabled',
-                    on: settings.loginModalAdminEnabled ?? "",
+                    on: config.loginModalAdminEnabled ?? settings.loginModalAdminEnabled ?? "",
                     instructions: 'Enable for admins but only if enabled above.'|t('announce'),
-                    warning: settings.loginModalAdminEnabledConfig ? _self.warningString('loginModalAdminEnabled')
+                    warning: _self.warning('loginModalAdminEnabled', configFileName)
                 }) }}
             </div>
 
@@ -101,18 +105,18 @@
             {{ forms.textField({
                 label: 'Title'|t('announce'),
                 name: 'loginModalTitle',
-                value: settings.loginModalTitle,
+                value:  config.loginModalTitle ?? settings.loginModalTitle,
                 required: true,
                 instructions: 'The title of the modal announcement.'|t('announce'),
-                warning: settings.loginModalTitleConfig ? _self.warningString('loginModalTitle')
+                warning: _self.warning('loginModalTitle', configFileName)
             }) }}
 
             {{ forms.textField({
                 label: 'Body Text'|t('announce'),
                 name: 'loginModalBodyText',
-                value: settings.loginModalBodyText,
+                value: config.loginModalBodyText ?? settings.loginModalBodyText,
                 instructions: 'The body text of the modal announcement.'|t('announce'),
-                warning: settings.loginModalBodyTextConfig ? _self.warningString('loginModalBodyText')
+                warning: _self.warning('loginModalBodyText', configFileName)
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
@@ -124,17 +128,17 @@
             {{ forms.textField({
                 label: 'Button Text'|t('announce'),
                 name: 'loginModalLinkText',
-                value: settings.loginModalLinkText,
+                value: config.loginModalLinkText ?? settings.loginModalLinkText,
                 instructions: 'Button does not show if blank.'|t('announce'),
-                warning: settings.loginModalLinkTextConfig ? _self.warningString('loginModalLinkText')
+                warning: _self.warning('loginModalLinkText', configFileName)
             }) }}
 
             {{ forms.textField({
                 label: 'Button URL'|t('announce'),
                 name: 'loginModalLink',
-                value: settings.loginModalLink,
+                value: config.loginModalLink ?? settings.loginModalLink,
                 instructions: 'Opens in new tab. \n Button does not show if blank.'|t('announce'),
-                warning: settings.loginModalLinkConfig ? _self.warningString('loginModalLink')
+                warning: _self.warning('loginModalLink', configFileName)
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
@@ -146,17 +150,17 @@
             {{ forms.textField({
                 label: 'Button Text'|t('announce'),
                 name: 'loginModalContinueButtonText',
-                value: settings.loginModalContinueButtonText,
+                value: config.loginModalContinueButtonText ?? settings.loginModalContinueButtonText,
                 instructions: 'Defaults to "Continue" if empty.'|t('announce'),
-                warning: settings.loginModalContinueButtonTextConfig ? _self.warningString('loginModalContinueButtonText')
+                warning: _self.warning('loginModalContinueButtonText', configFileName)
             }) }}
 
             {{ forms.textField({
                 label: 'Button Redirect URL'|t('announce'),
                 name: 'loginModalContinueButtonURL',
-                value: settings.loginModalContinueButtonURL,
+                value: config.loginModalContinueButtonURL ?? settings.loginModalContinueButtonURL,
                 instructions: 'Redirect URL when login modal button is clicked. \n Leave blank to use default behaviour.'|t('announce'),
-                warning: settings.loginModalContinueButtonURLConfig ? _self.warningString('loginModalContinueButtonURL')
+                warning: _self.warning('loginModalContinueButtonURL', configFileName)
             }) }}
         </div>
     </div>
