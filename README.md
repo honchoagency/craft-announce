@@ -41,7 +41,7 @@ Follow these steps to install Announce:
 
 2. Run the composer require command for the plugin:
 
-        composer require honcho/craft-announce
+        composer require honchoagency/craft-announce
 
 3. Then, in the CLI, install the plugin using:
 

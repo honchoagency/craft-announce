@@ -1,8 +1,14 @@
 {
-  "name": "honcho/craft-announce",
-  "description": "Display an announcement to admin users",
+  "name": "honchoagency/craft-announce",
+  "description": "Display an announcement to users in the Craft CMS control panel.",
   "type": "craft-plugin",
   "license": "proprietary",
+  "authors": [
+    {
+      "name": "honchoagency",
+      "homepage": "https://honcho.agency"
+    }
+  ],
   "support": {
     "email": "hello@honcho.agency",
     "issues": "https://github.com/honchoagency/craft-announce/issues?state=open",
@@ -20,13 +26,13 @@
   },
   "autoload": {
     "psr-4": {
-      "honcho\\craftannounce\\": "src/"
+      "honchoagency\\craftannounce\\": "src/"
     }
   },
   "extra": {
     "handle": "announce",
     "name": "Announce",
-    "developer": "Honcho",
+    "developer": "Honcho Agency",
     "documentationUrl": "https://github.com/honchoagency/craft-announce"
   },
   "scripts": {
