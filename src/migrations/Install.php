@@ -16,7 +16,7 @@ class Install extends Migration
     public function safeUp(): bool
     {
         $createSettingsTable = $this->createTable(
-            '{{%honcho_announce_settings}}',
+            '{{%announce_settings}}',
             [
                 'handle' => $this->string()->notNull(),
                 'dateCreated' => $this->dateTime()->notNull(),
@@ -51,7 +51,7 @@ class Install extends Migration
      */
     public function safeDown(): bool
     {
-        $this->dropTableIfExists('{{%honcho_announce_settings}}');
+        $this->dropTableIfExists('{{%announce_settings}}');
 
         return true;
     }
