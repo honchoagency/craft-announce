@@ -51,7 +51,7 @@
 
             <h2>{{ "Banner Link"|t('announce') }}</h2>
 
-            <p>{{ "This link allows you to provide and external source for more information."|t('announce') }}</p>
+            <p>{{ "Link the user to more information or any URL."|t('announce') }}</p>
 
             {{ forms.textField({
                 label: 'Banner Link Text'|t('announce'),
@@ -79,15 +79,20 @@
                 label: 'Enabled'|t('announce'),
                 name: 'loginModalEnabled',
                 on: settings.loginModalEnabled ?? "",
-                warning: settings.loginModalEnabledConfig ? _self.warningString('loginModalEnabled')
+                instructions: 'Enable for all users.'|t('announce'),
+                warning: settings.loginModalEnabledConfig ? _self.warningString('loginModalEnabled'),
+                toggle: "#login-modal-admins"
             }) }}
 
-            {{ forms.lightswitchField({
-                label: 'Disable for Admins'|t('announce'),
-                name: 'loginModalAdminDisabled',
-                on: settings.loginModalAdminDisabled ?? "",
-                warning: settings.loginModalAdminDisabledConfig ? _self.warningString('loginModalAdminDisabled')
-            }) }}
+            <div id="login-modal-admins">
+                {{ forms.lightswitchField({
+                    label: 'Enabled for Admins'|t('announce'),
+                    name: 'loginModalAdminEnabled',
+                    on: settings.loginModalAdminEnabled ?? "",
+                    instructions: 'Enable for admins but only if enabled above.'|t('announce'),
+                    warning: settings.loginModalAdminEnabledConfig ? _self.warningString('loginModalAdminEnabled')
+                }) }}
+            </div>
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
@@ -98,7 +103,7 @@
                 name: 'loginModalTitle',
                 value: settings.loginModalTitle,
                 required: true,
-                instructions: 'The title of the modal loginModalTitle.'|t('announce'),
+                instructions: 'The title of the modal announcement.'|t('announce'),
                 warning: settings.loginModalTitleConfig ? _self.warningString('loginModalTitle')
             }) }}
 
@@ -114,7 +119,7 @@
 
             <h2>{{ "Link Button"|t('announce') }}</h2>
 
-            <p>{{ "This link allows you to provide and external source for more information."|t('announce') }}</p>
+            <p>{{ "Link the user to more information or any URL."|t('announce') }}</p>
 
             {{ forms.textField({
                 label: 'Button Text'|t('announce'),
