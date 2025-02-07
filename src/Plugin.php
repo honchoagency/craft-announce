@@ -154,11 +154,7 @@ class Plugin extends BasePlugin
                     if ($Settings->loginModalEnabled) {
                         if ($userIsAdmin && $Settings->loginModalAdminEnabled) {
                             $userSession->setReturnUrl(UrlHelper::cpUrl('login-announcement'));
-                        } else {
-                            $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
                         }
-                    } else {
-                        $userSession->setReturnUrl(UrlHelper::cpUrl('dashboard'));
                     }
                 }
             }
