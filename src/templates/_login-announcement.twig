@@ -6,17 +6,17 @@
 {% set bodyClass = 'honcho-announcement' %}
 
 {% set settings = settings ?? null %}
-{% set title = settings.loginModalTitle %}
-{% set loginModalTitle = settings.loginModalTitle ?? null %}
-{% set loginModalBodyText = settings.loginModalBodyText ?? null %}
-{% set loginModalLinkText = settings.loginModalLinkText ?? null %}
-{% set loginModalLink = settings.loginModalLink ?? null %}
-{% set loginModalContinueButtonText = settings.loginModalContinueButtonText is not empty ? settings.loginModalContinueButtonText : "Continue" %}
-{% set loginModalContinueButtonURL = settings.loginModalContinueButtonURL ?? null %}
+{% set title = settings.modalTitle %}
+{% set modalTitle = settings.modalTitle ?? null %}
+{% set bodyText = settings.bodyText ?? null %}
+{% set linkButtonText = settings.linkButtonText ?? null %}
+{% set linkButtonUrl = settings.linkButtonUrl ?? null %}
+{% set buttonText = settings.buttonText is not empty ? settings.buttonText : "Continue" %}
+{% set buttonRedirectUrl = settings.buttonRedirectUrl ?? null %}
 
 {# set the redirect on the window in the head for the JS asset bundle to use #}
 {% js at head %}
-    window.loginRedirectURL = "{{ loginModalContinueButtonURL ? loginModalContinueButtonURL : "/admin/dashboard" }}";
+    window.loginRedirectURL = "{{ buttonRedirectUrl ? buttonRedirectUrl : "/admin/dashboard" }}";
 {% endjs %}
 
 {% block body %}
@@ -35,17 +35,17 @@
                 </svg>
 
                 <h1 id="announce-heading">
-                    {{ loginModalTitle }}
+                    {{ modalTitle }}
                 </h1>
 
                 <p id="announce-body">
-                    {{ loginModalBodyText }}
+                    {{ bodyText }}
                 </p>
 
                 <div class="buttons" style="justify-content: space-between;">
-                    {% if loginModalLink and loginModalLinkText is not empty %}
-                        <a href="{{ loginModalLink }}" class="btn link-btn go">
-                            {{ loginModalLinkText }}
+                    {% if linkButtonUrl and linkButtonText is not empty %}
+                        <a href="{{ linkButtonUrl }}" class="btn link-btn go">
+                            {{ linkButtonText }}
                         </a>
                     {% endif %}
 
@@ -53,7 +53,7 @@
 
                     {{ forms.button({
                         id: 'continueBtn',
-                        label: loginModalContinueButtonText,
+                        label: buttonText,
                         style: 'whitespace: nowrap;',
                         spinner: true,
                     }) }}

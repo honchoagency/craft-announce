@@ -11,15 +11,21 @@
 {% set title = 'Announce' %}
 {% set fullPageForm = true %}
 {% set configFileName = "announce" %}
+{% set bannerTabHasError = settings.getErrors('bannerLink') %}
+{% set modalTabHasError = settings.getErrors('linkButtonUrl') or settings.getErrors('buttonRedirectUrl') %}
 
 {% set tabs = {
-    'banner': { label: 'Banner'|t('announce'), url: '#announce-alert' },
-    'modal': { label: 'Modal'|t('announce'), url: '#announce-modal' },
+    'banner': { label: 'Banner'|t('announce'), url: '#announce-alert', class: bannerTabHasError ? 'error' : '' },
+    'modal': { label: 'Modal'|t('announce'), url: '#announce-modal', class:  modalTabHasError ? 'error' : '' },
 } %}
 
 {% set crumbs = [
     { url: 'announce', label: 'Announce' }
 ] %}
+
+{% set additionalButtons %}
+    <a href='/admin/login-announcement' class='preview-btn btn' target='_blank'>{{ "Preview Login Modal"|t('announce') }}</a>
+{% endset %}
 
 {% block content %}
     {{ actionInput('announce/settings/save-settings') }}
@@ -28,7 +34,7 @@
         <div id="announce-alert">
             <h2>{{ "Banner"|t('announce') }}</h2>
 
-            <p>{{ "The alert banner will display your announcement at the top of the page for all users."|t('announce') }}</p>
+            <p>{{ "The alert banner will display your announcement at the top of the admin panel."|t('announce') }}</p>
 
             {{ forms.lightswitchField({
                 label: 'Enabled'|t('announce'),
@@ -46,8 +52,8 @@
             {{ forms.textField({
                 label: 'Banner Text'|t('announce'),
                 name: 'bannerText',
+                instructions: 'Banner does not show if blank.'|t('announce'),
                 value: config.bannerText ?? settings.bannerText,
-                required: true,
                 warning: _self.warning('bannerText', configFileName)
             }) }}
 
@@ -70,33 +76,22 @@
                 name: 'bannerLink',
                 value: config.bannerLink ?? settings.bannerLink,
                 instructions: 'Opens in new tab. \n Button does not show if blank.'|t('announce'),
-                warning: _self.warning('bannerLink', configFileName)
+                warning: _self.warning('bannerLink', configFileName),
+                errors: settings.getErrors('bannerLink')
             }) }}
         </div>
 
         <div id="announce-modal" class="hidden">
             <h2>{{ "Login Modal"|t('announce') }}</h2>
 
-            <p>{{ "The login modal will display your announcement when users log in."|t('announce') }} <a href='/admin/login-announcement' class='go announce-dark-link' target='_blank'>{{ "View Login Modal"|t('announce') }}</a></p>
+            <p>{{ "The login modal will display your announcement when users log in to the admin panel."|t('announce') }}</p>
 
             {{ forms.lightswitchField({
                 label: 'Enabled'|t('announce'),
-                name: 'loginModalEnabled',
-                on: config.loginModalEnabled ?? settings.loginModalEnabled ?? "",
-                instructions: 'Enable for all users.'|t('announce'),
-                warning: _self.warning('loginModalEnabled', configFileName),
-                toggle: "#login-modal-admins"
+                name: 'modalEnabled',
+                on: config.modalEnabled ?? settings.modalEnabled ?? "",
+                warning: _self.warning('modalEnabled', configFileName)
             }) }}
-
-            <div id="login-modal-admins">
-                {{ forms.lightswitchField({
-                    label: 'Enabled for Admins'|t('announce'),
-                    name: 'loginModalAdminEnabled',
-                    on: config.loginModalAdminEnabled ?? settings.loginModalAdminEnabled ?? "",
-                    instructions: 'Enable for admins but only if enabled above.'|t('announce'),
-                    warning: _self.warning('loginModalAdminEnabled', configFileName)
-                }) }}
-            </div>
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
@@ -104,19 +99,18 @@
 
             {{ forms.textField({
                 label: 'Title'|t('announce'),
-                name: 'loginModalTitle',
-                value:  config.loginModalTitle ?? settings.loginModalTitle,
-                required: true,
+                name: 'modalTitle',
+                value:  config.modalTitle ?? settings.modalTitle,
                 instructions: 'The title of the modal announcement.'|t('announce'),
-                warning: _self.warning('loginModalTitle', configFileName)
+                warning: _self.warning('modalTitle', configFileName)
             }) }}
 
             {{ forms.textField({
                 label: 'Body Text'|t('announce'),
-                name: 'loginModalBodyText',
-                value: config.loginModalBodyText ?? settings.loginModalBodyText,
+                name: 'bodyText',
+                value: config.bodyText ?? settings.bodyText,
                 instructions: 'The body text of the modal announcement.'|t('announce'),
-                warning: _self.warning('loginModalBodyText', configFileName)
+                warning: _self.warning('bodyText', configFileName)
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
@@ -126,41 +120,43 @@
             <p>{{ "Link the user to more information or any URL."|t('announce') }}</p>
 
             {{ forms.textField({
-                label: 'Button Text'|t('announce'),
-                name: 'loginModalLinkText',
-                value: config.loginModalLinkText ?? settings.loginModalLinkText,
+                label: 'Link Button Text'|t('announce'),
+                name: 'linkButtonText',
+                value: config.linkButtonText ?? settings.linkButtonText,
                 instructions: 'Button does not show if blank.'|t('announce'),
-                warning: _self.warning('loginModalLinkText', configFileName)
+                warning: _self.warning('linkButtonText', configFileName)
             }) }}
 
             {{ forms.textField({
-                label: 'Button URL'|t('announce'),
-                name: 'loginModalLink',
-                value: config.loginModalLink ?? settings.loginModalLink,
+                label: 'Link Button URL'|t('announce'),
+                name: 'linkButtonUrl',
+                value: config.linkButtonUrl ?? settings.linkButtonUrl,
                 instructions: 'Opens in new tab. \n Button does not show if blank.'|t('announce'),
-                warning: _self.warning('loginModalLink', configFileName)
+                warning: _self.warning('linkButtonUrl', configFileName),
+                errors: settings.getErrors('linkButtonUrl')
             }) }}
 
             <hr style="margin-inline: calc(var(--xl)* -1);">
 
             <h2>{{ "Continue Button"|t('announce') }}</h2>
 
-            <p>{{ "The user will click this to dismiss the modal announcement and continue to the admin."|t('announce') }}</p>
+            <p>{{ "The user will click this to dismiss the modal announcement and continue to the admin panel."|t('announce') }}</p>
 
             {{ forms.textField({
                 label: 'Button Text'|t('announce'),
-                name: 'loginModalContinueButtonText',
-                value: config.loginModalContinueButtonText ?? settings.loginModalContinueButtonText,
-                instructions: 'Defaults to "Continue" if empty.'|t('announce'),
-                warning: _self.warning('loginModalContinueButtonText', configFileName)
+                name: 'buttonText',
+                value: config.buttonText ?? settings.buttonText,
+                placeholder: 'Continue',
+                warning: _self.warning('buttonText', configFileName)
             }) }}
 
             {{ forms.textField({
                 label: 'Button Redirect URL'|t('announce'),
-                name: 'loginModalContinueButtonURL',
-                value: config.loginModalContinueButtonURL ?? settings.loginModalContinueButtonURL,
-                instructions: 'Redirect URL when login modal button is clicked. \n Leave blank to use default behaviour.'|t('announce'),
-                warning: _self.warning('loginModalContinueButtonURL', configFileName)
+                name: 'buttonRedirectUrl',
+                value: config.buttonRedirectUrl ?? settings.buttonRedirectUrl,
+                instructions: 'Redirect URL when the login modal button is clicked. \n Leave blank to use default behaviour.'|t('announce'),
+                warning: _self.warning('buttonRedirectUrl', configFileName),
+                errors: settings.getErrors('buttonRedirectUrl')
             }) }}
         </div>
     </div>
