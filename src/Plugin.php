@@ -143,16 +143,13 @@ class Plugin extends BasePlugin
             User::EVENT_AFTER_LOGIN,
             function() {
                 $request = Craft::$app->getRequest();
-                $userSession = Craft::$app->getUser();
+                $user = Craft::$app->getUser();
 
                 if ($request->getIsCpRequest()) {
-                    $userIsAdmin = $userSession->getIsAdmin();
                     $settings = $this->settings->getSettings();
 
-                    if ($settings->loginModalEnabled) {
-                        if ($userIsAdmin && $settings->loginModalAdminEnabled) {
-                            $userSession->setReturnUrl(UrlHelper::cpUrl('login-announcement'));
-                        }
+                    if ($settings->modalEnabled) {
+                        $user->setReturnUrl(UrlHelper::cpUrl('login-announcement'));
                     }
                 }
             }
