@@ -11,11 +11,11 @@ Keep your clients and admin users informed with a simple announcement banner and
 
 - **Announcement Banner**: Display a simple announcement banner at the top of the page.
 
-    <img src="./docs/resources/announce-alert-banner.png" alt="drawing" width="500"/>
+    <img src="./docs/resources/announce-alert-banner.png" alt="drawing" width="700"/>
 
 - **Login Announcement Modal**: Display an announcement modal when users log in.
 
-    <img src="./docs/resources/login-modal-announcement.png" alt="drawing" width="500"/>
+    <img src="./docs/resources/login-modal-announcement.png" alt="drawing" width="700"/>
 
 - **Database Settings**: The settings are not stored in the project config files, but in the database. This allows for easy configuration and updating of the settings per environment. The option to have the settings in the codebase is still available via a plugin config file.
 
