@@ -2,7 +2,6 @@
 
 namespace honchoagency\craftannounce\web\assets\loginannouncement;
 
-use Craft;
 use craft\web\AssetBundle;
 
 /**
