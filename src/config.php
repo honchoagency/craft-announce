@@ -14,26 +14,23 @@ return [
     'bannerLink' => '',
 
     // Enable the login modal
-    'loginModalEnabled' => false,
-
-    // Disable the login modal for admins
-    'loginModalAdminEnabled' => false,
+    'modalEnabled' => false,
 
     // Title of the login modal
-    'loginModalTitle' => "",
+    'modalTitle' => "",
 
     // Body Text of the login modal
-    'loginModalBodyText' => "",
+    'bodyText' => "",
 
     // Link Button Text of the login modal
-    'loginModalLinkText' => "",
+    'linkButtonText' => "",
 
     // Link Button URL of the login modal
-    'loginModalLink' => "",
+    'linkButtonUrl' => "",
 
     // Continue Button Text of the login modal
-    'loginModalContinueButtonText' => "",
+    'buttonText' => "",
 
     // Continue Button URL of the login modal
-    'loginModalContinueButtonURL' => "",
+    'buttonRedirectUrl' => "",
 ];
