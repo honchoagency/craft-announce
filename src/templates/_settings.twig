@@ -11,12 +11,12 @@
 {% set title = 'Announce' %}
 {% set fullPageForm = true %}
 {% set configFileName = "announce" %}
-{% set bannerTabHasError = settings.getErrors('bannerLink') %}
-{% set modalTabHasError = settings.getErrors('linkButtonUrl') or settings.getErrors('buttonRedirectUrl') %}
+{% set bannerTabClass = settings.getErrors('bannerLink') ? 'error' : '' %}
+{% set modalTabClass = settings.getErrors('linkButtonUrl') or settings.getErrors('buttonRedirectUrl') ? 'error' : '' %}
 
 {% set tabs = {
-    'banner': { label: 'Banner'|t('announce'), url: '#announce-alert', class: bannerTabHasError ? 'error' : '' },
-    'modal': { label: 'Modal'|t('announce'), url: '#announce-modal', class:  modalTabHasError ? 'error' : '' },
+    'banner': { label: 'Banner'|t('announce'), url: '#announce-alert', class: bannerTabClass },
+    'modal': { label: 'Modal'|t('announce'), url: '#announce-modal', class:  modalTabClass },
 } %}
 
 {% set crumbs = [
