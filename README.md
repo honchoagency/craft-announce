@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./docs/resources/Honcho-Entity.jpg" alt="drawing" width="500"/>
+    <img src="./docs/resources/Banner.jpg" alt="drawing"/>
 </p>
 
 # Announce plugin for Craft CMS 5.5.0 or later
@@ -64,6 +64,7 @@ Current plans for the future of Announce include:
 
 - **Multiple Announcements**: Allow for multiple announcements to be created and managed.
 
+- **User Groups**: Allow for announcements to be targeted at specific user groups.
 
 
 Created by [Honcho](https://honcho.agency)
