@@ -85,7 +85,7 @@ class Plugin extends BasePlugin
         $navItem = [
             'url' => 'announce',
             'label' => Craft::t('announce','Announce'),
-            'icon' => CRAFT_BASE_PATH . '/plugins/announce/src/icon-mask.svg',
+            'icon' => '@honchoagency/craftannounce/icon-mask.svg',
         ];
 
         if (!Craft::$app->getUser()->checkPermission('accessPlugin-announce')) {
