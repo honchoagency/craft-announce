@@ -2,22 +2,34 @@
     <img src="./docs/resources/Banner.jpg" alt="drawing"/>
 </p>
 
-# Announce plugin for Craft CMS 5.5.0 or later
+# Announce plugin for Craft CMS 5.0.0 or later
 
 Keep your clients and admin users informed with a simple announcement banner and login announcement modal.
 
 
 ## Features
 
-- **Announcement Banner**: Display a simple announcement banner at the top of the page.
+### Announcement Banner
 
-    <img src="./docs/resources/announce-alert-banner-001.png" alt="drawing" width="700"/>
+ - Display an announcement banner at the top of the admin panel.
 
-- **Login Announcement Modal**: Display an announcement modal when users log in.
+ - You can add any text you like and optionally link to a URL for any purpose.
 
-    <img src="./docs/resources/login-modal-announcement-001.png" alt="drawing" width="700"/>
+<img src="./docs/resources/announce-alert-banner.png" alt="drawing"/>
 
-- **Database Settings**: The settings are not stored in the project config files, but in the database. This allows for easy configuration and updating of the settings per environment. The option to have the settings in the codebase is still available via a plugin config file.
+### Login Announcement Modal
+
+ - Display an announcement modal when users log in to the admin panel.
+
+ - The modal content is independant of the announcement banner and has an extra body text option.
+
+ - The continue button text can be customized and redirect to any URL.
+
+<img src="./docs/resources/login-modal-announcement.png" alt="drawing"/>
+
+### Database Settings
+
+The settings are not stored in the project config files, but in the database. This allows for easy configuration and updating of the settings per environment. The option to have the settings in the codebase is still available via a plugin config file.
 
 ## Requirements
 
