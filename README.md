@@ -2,7 +2,7 @@
     <img src="./docs/resources/Banner.jpg" alt="drawing"/>
 </p>
 
-# Announce plugin for Craft CMS 5.0.0 or later
+# Announce plugin for Craft CMS 4 and 5
 
 Keep your clients and admin users informed with a simple announcement banner and login announcement modal.
 
@@ -33,7 +33,7 @@ The settings are not stored in the project config files, but in the database. Th
 
 ## Requirements
 
-This plugin requires Craft CMS 5.0.0 or later, and PHP 8.2 or later.
+This plugin requires Craft CMS 4.0.0 or later.
 
 ## Installation
 
