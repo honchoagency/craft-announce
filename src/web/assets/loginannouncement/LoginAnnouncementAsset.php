@@ -11,6 +11,6 @@ class LoginAnnouncementAsset extends AssetBundle
 {
     public $sourcePath = __DIR__ . '/dist';
     public $depends = [];
-    public $js = ['js/login-announcement.js'];
+    public $js = [];
     public $css = ['css/login-announcement.css'];
 }

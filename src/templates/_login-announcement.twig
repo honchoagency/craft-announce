@@ -12,12 +12,7 @@
 {% set linkButtonText = settings.linkButtonText ?? null %}
 {% set linkButtonUrl = settings.linkButtonUrl ?? null %}
 {% set buttonText = settings.buttonText is not empty ? settings.buttonText : "Continue" %}
-{% set buttonRedirectUrl = settings.buttonRedirectUrl ?? null %}
-
-{# set the redirect on the window in the head for the JS asset bundle to use #}
-{% js at head %}
-    window.loginRedirectURL = "{{ buttonRedirectUrl ? buttonRedirectUrl : "/admin/dashboard" }}";
-{% endjs %}
+{% set buttonRedirectUrl = settings.buttonRedirectUrl ? settings.buttonRedirectUrl : "/admin/dashboard" %}
 
 {% block body %}
     <div id="main-content">
@@ -51,12 +46,9 @@
 
                     <div></div>
 
-                    {{ forms.button({
-                        id: 'continueBtn',
-                        label: buttonText,
-                        style: 'whitespace: nowrap;',
-                        spinner: true,
-                    }) }}
+                    <a href="{{ buttonRedirectUrl }}" id="continueBtn" class="btn link-btn">
+                        {{ buttonText }}
+                    </a>
                 </div>
             </div>
         </div>
