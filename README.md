@@ -79,7 +79,7 @@ Current plans for the future of Announce include:
 - **User Groups**: Allow for announcements to be targeted at specific user groups.
 
 
-Created by [Honcho](https://honcho.agency)
+Created by [Honcho, Craft CMS Agency](https://honcho.agency/craft-cms)
 
 
 
